@@ -1,0 +1,42 @@
+.item{
+	display: inline-block;
+	position: relative;
+	margin-left: 4%;
+	margin-right: 4%;
+	margin-top: 20;
+	padding: 15;
+	width: 88%;
+}
+#answers{
+	margin-top: 60;
+}
+.quest-text{
+	margin-top: 10;
+}
+.user-name{
+	font-size: 14px;
+	float: right;
+	clear: both;
+	margin-top: 10;
+}
+
+.city-name{
+	font-size: 14px;
+	float: right;
+	clear: both;
+	margin-top: 10;
+}
+
+#user-answer-text{
+	width: 50%;
+	margin-top: 50;
+	resize: none;
+	font-size: 20;
+}
+#user-answer{
+	text-align: center;
+}
+
+#answer-submit-btn{
+	display:block;
+}

@@ -1,0 +1,27 @@
+#scrolled{
+  height: 90%;
+  overflow: auto;
+}
+.content {
+	background: white;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.city-img {
+	height:	150px;
+	width: 150px;
+}
+
+.city-div {
+	display: inline-block;
+	margin: 10;
+	text-align: center;
+}
+#cities {
+	padding-top: 50px;
+}
+.search-items {
+	padding-top: 50px;
+}

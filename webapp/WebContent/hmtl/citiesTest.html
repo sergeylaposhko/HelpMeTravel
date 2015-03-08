@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Cities</title>
+    
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <script type="text/javascript" src="../js/cities.js"></script>
+    <script type="text/javascript" src="../js/apis.js"></script>
+    <link rel="import" href="../bower_components/paper-button/paper-button.html"/>
+    <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html"/>
+    <link rel="import" href="../bower_components/core-scroll-threshold/core-scroll-threshold.html"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../css/cities.css"/>
+  </head>
+  <body ng-app="scroll" ng-controller="cityController" class="ng-scope">
+      <core-header-panel id="fixed" mode="waterfall-tall" when-scrolled="loadMore()">
+      <div class="core-header">asdas</div>
+      
+    
+  <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
+  <div id="scroller" fit>
+    <template repeat="{{i in items}}">
+      <div class="thing">{{i}}</div>
+    </template>
+    <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+  </div> 
+
+
+    
+    </core-header-panel>
+  </body>
+</html>
+<style shim-shadowdom>
+core-header-panel {
+width: 100%;
+}
+core-header-panel[mode=cover]::shadow #mainContainer {
+left: 70px;
+}
+.core-header {
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  padding: 0 10px;
+  background-color: #4F7DC9;
+  color: #FFF;
+  transition: height 0.2s;
+}
+.core-header.tall {
+height: 180px;  
+}
+.core-header.medium-tall {
+height: 120px;
+}
+.content {
+height: 2000px;
+background: linear-gradient(rgb(214, 227, 231), lightblue);
+}
+</style>

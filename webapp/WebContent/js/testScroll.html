@@ -1,0 +1,66 @@
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>AngularJS: Infinite Scrolling - jsFiddle demo by vojtajina</title>
+  <script type="text/javascript" src="angular.js"></script>
+  
+  
+  <style type="text/css">
+    li {
+      height: 120px;
+      border-bottom: 1px solid gray;
+    }
+    #fixed {
+      height: 100%;
+      overflow: auto;
+    }
+  </style>
+  
+</head>
+
+
+<body ng-app="scroll" ng-controller="Main" class="ng-scope">
+  
+
+  <div id="fixed" when-scrolled="loadMore()">
+    <ul>
+      <li ng-repeat="i in items" class="ng-scope ng-binding">{{i}}</li>
+    </ul>
+    <div ng-show="busy">Loading...</div>
+  </div>
+  
+  <script type="text/javascript">
+  var app = angular.module('scroll', []);
+  app.directive('whenScrolled', function() {
+    return function(scope, elm, attr) {
+      var raw = elm[0];
+
+      elm.bind('scroll', function() {
+        if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+          scope.$apply(attr.whenScrolled);
+        }
+      });
+    };
+  });
+  app.controller('Main', function($scope, $http) {
+    $scope.items = [];
+    $scope.busy = false;
+    var counter = 0;
+    $scope.loadMore = function() {
+      if ($scope.busy)
+        return;
+      $scope.busy = true;
+
+      $http.get("http://localhost:8080/aoeu/rest/city/all").success(function(response){
+        for (var i = 0; i < response.length; i++) {
+          $scope.items.push(response[i]);
+        };
+        $scope.busy = false;
+      });
+
+    };
+
+    $scope.loadMore();
+  });
+
+  </script>
+</body></html>

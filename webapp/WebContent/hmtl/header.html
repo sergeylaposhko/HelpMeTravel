@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html"/>
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html"/>
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html"/>
+
+<core-header-panel >
+<div class="core-header" ng-app="headerApp" ng-controller="HeaderController">
+	<div class="all-city-link">
+		<a href="cities.html" class="profile-link">All cities</a>
+	</div>
+	<div class="login-buttons" id="login-div" ng-show="!data.loggined">
+		<paper-button raised ng-click="toggleloginDialog()">Login</paper-button>
+		<paper-button raised ng-click="toggleSignUpDialog()">Sign up</paper-button>
+		
+		<paper-dialog heading="Login" id="loginDialog" transition="core-transition-center">
+			<paper-input-decorator label="Login">
+				<input is="core-input" name="login" ng-model="loginLogin">
+			</paper-input-decorator>
+			<paper-input-decorator label="Password" type="password">
+				<input is="core-input" type="password" ng-model="loginPassword">
+			</paper-input-decorator>
+			<paper-button raised ng-click="loginAction()">Ok</paper-button>
+			<paper-button raised ng-click="loginCancelAction()">Cancel</paper-button>
+		</paper-dialog>
+		
+		<paper-dialog heading="Sign up" id="signUpDialog" transition="core-transition-center">
+			<paper-input-decorator label="Login">
+				<input is="core-input" type="" name="login" ng-model="signup.login">
+			</paper-input-decorator>
+
+			<paper-input-decorator label="Password" type="password">
+				<input is="core-input" type="password" ng-model="signup.password">
+			</paper-input-decorator>
+			<paper-input-decorator label="Confirm pass" type="password">
+				<input is="core-input" type="password" ng-model="signup.confirmPassword">
+			</paper-input-decorator>
+			
+			<paper-input-decorator label="First name">
+				<input is="core-input" type="text" ng-model="signup.firstName">
+			</paper-input-decorator>
+
+			<paper-input-decorator label="Last name">
+				<input is="core-input" type="text" ng-model="signup.lastName">
+			</paper-input-decorator>
+
+			<paper-button raised ng-click="signupAction()">Ok</paper-button>
+			<paper-button raised ng-click="signupCancelAction()">Cancel</paper-button>
+		</paper-dialog>
+		<paper-toast id="ok-login-toast">You have successfully logged in</paper-toast>
+		<paper-toast id="error-login-toast">Error while logging in</paper-toast>
+		<paper-toast id="ok-signup-toast">You are registrated</paper-toast>
+		<paper-toast id="error-signup-toast">Error while registrating.</paper-toast>
+	</div>
+	<div class="login-buttons" id="logout-div" ng-show="data.loggined">
+		<a class="profile-link" href="profile.html">Profile</a>		
+		<paper-button raised ng-click="logoutAction()">Logout</paper-button>
+	</div>
+</div>
+</core-header-panel>

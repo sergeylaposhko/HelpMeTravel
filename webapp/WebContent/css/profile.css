@@ -1,0 +1,25 @@
+.shadow{
+	display: inline-table;
+	margin-top: 20;
+}
+.content{
+	padding: 50;
+}
+.places-info, .cities-info{
+	margin-top: 20;
+}
+.user-img{
+	height:	150px;
+}
+.user-info{
+	text-align: center;
+}
+.user-shadow {
+	display: inline-block;
+}
+.city-add {
+	margin: 50;
+}
+.place-add{
+	margin:50;
+}

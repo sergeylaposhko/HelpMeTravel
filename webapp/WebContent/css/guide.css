@@ -1,0 +1,40 @@
+.guide-img {
+	height: 300;
+}
+
+#guide-info{
+	margin-top: 50;
+	margin-left: 2%;
+	margin-right: 2%;	
+}
+
+.img-shadow{
+	display: inline-block;
+	padding: 5;
+}
+
+.content{
+	text-align: center;
+}
+
+.text-info{
+	text-align: justify;
+	padding: 10;
+}
+.country-name {
+	margin-top: 5;
+	float: right;
+	clear: both;
+}
+.email{
+	margin-top: 5;
+	float:right;
+	clear: both;
+}
+.disc {
+	margin-top: 15;
+	clear:both;
+	display: inline-block;
+	white-space: pre-line;
+	max-width: 400;
+}

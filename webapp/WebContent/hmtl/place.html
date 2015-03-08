@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/place.css"/>
+    
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <script type="text/javascript" src="../js/place.js"></script>
+    <script type="text/javascript" src="../js/apis.js"></script>
+    <script type="text/javascript" src="../js/header.js"></script>
+    <link rel="import" href="../bower_components/paper-button/paper-button.html"/>
+    <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+    <link rel="import" href="../bower_components/paper-item/paper-item.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+    
+    <title>Place</title>
+  </head>
+  <body class="ng-scope" ng-app="placeApp" ng-controller="placeController">
+    <div id="header" ng-include src="'header.html'"></div>
+    <div>
+      <div class="content">
+        <div class="place-name">{{place.name}}</div>
+        <div id="place-info">
+          <paper-shadow class="img-shadow">
+            <div><img class="place-img" src="{{place.photo}}"/></div>
+            <div class="city-name"> <a href="city.html?cityId={{place.city.id}}">{{place.city.name}}</a></div>
+            <div class="disc">{{place.description}}</div>
+            <div class="added-by">added by <a href="guide.html?guideId={{place.user.id}}">{{place.user.firstName}} {{place.user.lastName}}</a></div>
+          </paper-shadow>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

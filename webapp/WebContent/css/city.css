@@ -1,0 +1,81 @@
+.city-name {
+	text-align: center;
+	margin-top: 30;
+	font-size: 25;
+	margin-bottom: 20;
+}
+
+.city-img {
+	height: 300;
+	text-align: center;
+	margin-top: 10;
+}
+.img-shadow {
+	display: inline-block;
+}
+#tabs {
+	margin-top: 20;
+	text-align: center;
+}
+
+.place-img{
+	height:	150px;
+	width: 150px;
+}
+.guide-img{
+	height:	150px;
+	width: 150px;	
+}
+
+.place-div{
+	display: inline-block;
+	margin: 10;
+	text-align: center;
+}
+.guide-div{
+	display: inline-block;
+	margin: 10;
+	text-align: center;
+}
+.question-div {
+	margin-top: 20;
+	min-height: 60;	
+}
+.question-date{
+	float: right;
+	font-size: 12;
+}
+.question-user-name{
+	font-size: 14;
+}
+
+.question-shadow {
+	padding: 20;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#places-section{
+	text-align: center;
+}
+#guides-section {
+	text-align: center;
+}
+
+#user-question-text{
+	width: 50%;
+	margin-top: 20;
+	resize: none;
+	font-size: 20;
+}
+#user-question{
+	text-align: center;
+	padding-top: 30;
+}
+
+#question-submit-btn{
+	display:block;
+}
+#desc-div{
+	margin-top: 20;
+}

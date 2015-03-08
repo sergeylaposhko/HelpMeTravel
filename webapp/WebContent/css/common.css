@@ -1,0 +1,49 @@
+body {
+	margin: 0;
+	font-family: "RobotoDraft", Helvetica, Arial, sans-serif;
+	font-weight: 300;
+}
+
+core-header-panel {
+	width: 100%;
+	min-height: 60px;
+	height: 10%;
+}
+
+core-header-panel[mode=cover]::shadow #mainContainer {
+	left: 70px;
+}
+
+.core-header {
+
+	font-size: 18px;
+	padding: 10px;
+	background-color: #4F7DC9;
+	color: #FFF;
+	transition: height 0.2s;
+}
+
+.login-buttons {
+	float: right;
+	margin-top: 5;
+	margin-left: 10;
+	display: inline-block;
+}
+
+div.login-buttons>paper-button {
+	background-color: rgb(101, 101, 239);
+	font-size: 16px;
+}
+
+.error-message {
+	color: red;
+}
+
+.profile-link {
+	color: white;
+	text-decoration: underline;
+}
+
+.all-city-link {
+	display: inline-block;
+}

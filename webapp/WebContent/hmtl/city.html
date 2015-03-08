@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/city.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <script type="text/javascript" src="../js/city.js"></script>
+    <script type="text/javascript" src="../js/apis.js"></script>
+    <script type="text/javascript" src="../js/header.js"></script>
+    <link rel="import" href="../bower_components/paper-button/paper-button.html"/>
+    <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+    <link rel="import" href="../bower_components/paper-item/paper-item.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+    
+    <title>City</title>
+  </head>
+  <body ng-app="cityApp" class="ng-scope" ng-controller="cityController">
+    <div id="header" ng-include src="'header.html'"></div>
+    <div>
+      <div class="content">
+        <div class="city-name">{{city.name}}</div>
+        
+        <paper-tabs selected="0" id="tabs" class="transparent-teal" role="tablist" horizontal="" center="" layout="">
+        <paper-tab id="places-tab" role="tab" inline="" flex="" center-center="" horizontal="" layout="" class="core-selected" active="">Places</paper-tab>
+        <paper-tab id="questions-tab" role="tab" inline="" flex="" center-center="" horizontal="" layout="" class="">Questions</paper-tab>
+        <paper-tab id="guides-tab" role="tab" inline="" flex="" center-center="" horizontal="" layout="" class="">Guides</paper-tab>
+        </paper-tabs>
+
+        <div id="places-section" ng-show="tabs['places-tab']" ng-controller="placesController">
+          <div class="place-div" ng-repeat="i in places">
+            <paper-shadow z="1">
+            
+            <img class="place-img" src="{{i.photo}}"/>
+            <paper-item>
+            <div class="place-name"><a href="place.html?placeId={{i.id}}">{{i.name}}</a></div>
+            
+            </paper-item>
+            </paper-shadow>
+          </div>
+        </div>
+        <div id="questions-section" ng-show="tabs['questions-tab']" ng-controller="questionsController">
+          <div class="question-div" ng-repeat="i in questions">
+            <paper-shadow class="question-shadow">
+            <div class="question-header"><a href="question.html?questionId={{i.id}}">{{i.header}}</a></div>
+            <div class="question-date"> {{i.date}}</div>
+            <div class="question-user-name">{{i.user.firstName}} {{i.user.lastName}}</div>
+            </paper-shadow>
+          </div>
+          
+        <div id="user-question" ng-show="data.loggined">
+        <div>
+        	<input type="text" id="user-question-header" placeholder="Header of  your question"/>
+        </div>
+        <div id="desc-div">
+        	Desctiption: <br>
+    		<textarea rows="4" id="user-question-text" placeholer="Input your answer."></textarea>
+        </div>
+        <div>
+        	<paper-button id="question-submit-btn" ng-click="submitQuestion()">Submit</paper-button>
+        </div>
+        </div>
+          
+        </div>
+        
+        <div id="guides-section" ng-show="tabs['guides-tab']" ng-controller="guidesController">
+
+          <div class="guide-div" ng-repeat="i in guides">
+            <paper-shadow z="1">
+            
+            <img class="guide-img" src="{{i.photo}}"/>
+            <paper-item>
+            <div class="guide-name"><a href="guide.html?guideId={{i.id}}">{{i.firstName}} {{i.lastName}}</a></div>
+            
+            </paper-item>
+            </paper-shadow>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

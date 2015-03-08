@@ -1,0 +1,130 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/profile.css"/>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css"/>
+		
+		<script type="text/javascript" src="../js/angular.js"></script>
+		<script type="text/javascript" src="../js/angular-sanitize.js"></script>
+		<script type="text/javascript" src="../js/profile.js"></script>
+		<script type="text/javascript" src="../js/apis.js"></script>
+		<script type="text/javascript" src="../js/header.js"></script>
+		<link rel="import" href="../bower_components/paper-button/paper-button.html"/>
+		<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+		<link rel="import" href="../bower_components/paper-item/paper-item.html">
+		<link rel="import" href="../bower_components/paper-input/paper-input.html">
+		<link rel="import" href="../bower_components/paper-input/paper-input.html">
+		<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+		
+		<title>Profile</title>
+	</head>
+	<body class="ng-scope" ng-app="profileApp" ng-controller="profileController">
+		<div id="header" ng-include src="'header.html'"></div>
+		<div>
+			<div class="content" ng-show="data.loggined">
+				<div class="user-info">
+					<paper-shadow z="1" class="user-shadow">
+					
+					<img class="user-img" src="{{user.photo}}"/>
+					<paper-item>
+					<div class="user-name"><a href="guide.html?guideId={{user.id}}">{{user.firstName}} {{user.lastName}}</a></div>
+					
+					</paper-item>
+					</paper-shadow>
+				</div>
+				<div class="cities-info" ng-show="shows.citiesPlaces">
+					<div class="cities-title">Your cities</div>
+					<div class="user-cities">
+						<paper-shadow class="shadow">
+						<div class="city-item" ng-repeat="city in user.cities">
+							<paper-item>
+							<a href="city.html?cityId={{city.id}}"> {{city.name}} </a>
+							</paper-item>
+						</div>
+						</paper-shadow>
+						<paper-button ng-click="onAddCityClick()" raised>Add</paper-button>
+					</div>
+				</div>
+				<div class="places-info" ng-show="shows.citiesPlaces">
+					<div class="places-title">Places, you have added</div>
+					<div class="user-places">
+						<paper-shadow  class="shadow">
+						<div class="place-name" ng-repeat="place in user.places">
+							<paper-item>
+							<a href="place.html?placeId={{place.id}}">{{place.name}}</a>
+							</paper-item>
+						</div>
+						</paper-shadow>
+						<paper-button ng-click="onAddPlaceClick()" raised>Add</paper-button>
+					</div>
+				</div>
+				
+				<div class="place-add" ng-show="shows.addPlace">
+					<form action="http://localhost:8080/aoeu/rest/place/add" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="sessionId" value="{{data.sessionId}}"/>
+						<div class="form-group">
+							<input type="text" class="form-control" name="name" placeholder="Place name"></input>
+						</div>
+						<div class="form-group">
+							<textarea name="description" class="desc-text-area form-control" placeholder="Description"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="city-select">Choose the city for the place</label>
+							<select name="cityId" id="city-select" class="form-control" >
+								<option value="{{city.id}}" ng-repeat="city in user.cities">{{city.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="choose-place-photo">Choose the photo of the place</label>
+							<input type="file" id="choose-place-photo" name="photo"></input>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-default" value="Add" ng-click="resetShows()"></input>
+							<input type="button" class="btn btn-default" value="Cancel" ng-click="resetShows()"></input>
+						</div>
+					</form>
+				</div>
+				<div class="city-add" ng-show="shows.addCity">
+					<form action="http://localhost:8080/aoeu/rest/city/addToUser" method="post">
+						<input type="hidden" class="form-control" name="sessionId" value="{{data.sessionId}}"/>
+						<div class="form-group">
+							<select name="cityId" class="form-control">
+								<option value="{{city.id}}" ng-repeat="city in data.allCities">{{city.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-default" value="Add" ng-click="resetShows()"></input>
+							<input type="button" class="btn btn-default" value="Cancel" ng-click="resetShows()"></input>
+							<input type="button" class="btn btn-default" value="Can't find my city" ng-click="onCreateCityClick()"></input>
+						</div>
+					</form>
+				</div>
+				
+				<div class="create-city" ng-show="shows.createCity">
+					<form action="http://localhost:8080/aoeu/rest/city/add" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="sessionId" value="{{data.sessionId}}"/>
+						<div class="form-group">
+							<input type="text" class="form-control" name="name" placeholder="City name"></input>
+						</div>
+						<div class="form-group">
+							<label for="city-select">Choose the country for the city</label>
+							<select name="countryId" id="city-select" class="form-control" >
+								<option value="{{country.id}}" ng-repeat="country in data.countries">{{country.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="choose-city-photo">Choose the photo of the city</label>
+							<input type="file" id="choose-city-photo" name="photo"></input>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-default" value="Add" ng-click="resetShows()"></input>
+							<input type="button" class="btn btn-default" value="Cancel" ng-click="resetShows()"></input>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

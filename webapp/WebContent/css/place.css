@@ -1,0 +1,33 @@
+.place-name{
+	margin-top: 30;
+text-align: center;
+font-size: 25;
+}
+.added-by{
+	margin: 5;
+	text-align: right;
+	margin-right: 2%;
+}
+
+.city-name {
+	text-align: right;
+	margin: 5;
+}
+
+.img-shadow{
+	display: inline-block;
+}
+
+#place-info{
+	text-align: center;
+	margin-top: 20;
+	margin-left: 2%;
+	margin-right: 2%
+}
+.disc{
+	padding: 10;
+	text-align: justify;
+}
+.place-img {
+	width: 400;
+}
