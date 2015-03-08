@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ua.laposhko.hmt.entity.Comment" table="comment">
+		<id column="id" name="id" type="java.lang.Long">
+			<generator class="increment" />
+		</id>
+
+		<property column="place_id" name="placeId" type="java.lang.Long" />
+		<property column="user_id" name="userId" type="java.lang.Long" />
+		<property column="text" name="text" type="java.lang.String" />
+	</class>
+</hibernate-mapping>
