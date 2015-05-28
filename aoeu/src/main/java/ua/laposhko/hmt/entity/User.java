@@ -1,51 +1,61 @@
 package ua.laposhko.hmt.entity;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "user")
 @XmlRootElement
-public class User {
+public class User implements Serializable {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long sexId;
-    private long countryId;
+    @ManyToOne
+    @JoinColumn(name = "sex_id")
+    private Sex sexId;
+    @JoinColumn(name = "city_id")
+    private City city;
+    @JoinColumn(name = "first_name")
     private String firstName;
+    @JoinColumn(name = "last_name")
     private String lastName;
     private String login;
     private String photo;
+    @Column(name = "about_me")
     private String aboutMe;
     private String password;
 
     /**
      * @param id
      * @param sexId
-     * @param countryId
+     * @param city
      * @param firstName
      * @param lastName
      * @param login
      * @param photo
      */
-    public User(long id, long sexId, long countryId, String firstName,
-	    String lastName, String login, String photo, String aboutMe, String password) {
-	super();
-	this.id = id;
-	this.sexId = sexId;
-	this.countryId = countryId;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.login = login;
-	this.photo = photo;
-	this.aboutMe = aboutMe;
-	this.password = password;
+    public User(long id, Sex sexId, City city, String firstName,
+                String lastName, String login, String photo, String aboutMe, String password) {
+        super();
+        this.id = id;
+        this.sexId = sexId;
+        this.city = city;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.photo = photo;
+        this.aboutMe = aboutMe;
+        this.password = password;
     }
 
     /**
-     * 
+     *
      */
     public User() {
     }
@@ -54,120 +64,112 @@ public class User {
      * @return the id
      */
     public long getId() {
-	return id;
+        return id;
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
      * @return the sexId
      */
-    public long getSexId() {
-	return sexId;
+    public Sex getSexId() {
+        return sexId;
     }
 
     /**
-     * @param sexId
-     *            the sexId to set
+     * @param sexId the sexId to set
      */
-    public void setSexId(long sexId) {
-	this.sexId = sexId;
+    public void setSex(Sex sexId) {
+        this.sexId = sexId;
     }
 
     /**
-     * @return the countryId
+     * @return the city
      */
-    public long getCountryId() {
-	return countryId;
+    public City getCity() {
+        return city;
     }
 
     /**
-     * @param countryId
-     *            the countryId to set
+     * @param city the city to set
      */
-    public void setCountryId(long countryId) {
-	this.countryId = countryId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     /**
      * @return the firstName
      */
     public String getFirstName() {
-	return firstName;
+        return firstName;
     }
 
     /**
-     * @param firstName
-     *            the firstName to set
+     * @param firstName the firstName to set
      */
     public void setFirstName(String firstName) {
-	this.firstName = firstName;
+        this.firstName = firstName;
     }
 
     /**
      * @return the lastName
      */
     public String getLastName() {
-	return lastName;
+        return lastName;
     }
 
     /**
-     * @param lastName
-     *            the lastName to set
+     * @param lastName the lastName to set
      */
     public void setLastName(String lastName) {
-	this.lastName = lastName;
+        this.lastName = lastName;
     }
 
     /**
      * @return the login
      */
     public String getLogin() {
-	return login;
+        return login;
     }
 
     /**
-     * @param login
-     *            the login to set
+     * @param login the login to set
      */
     public void setLogin(String login) {
-	this.login = login;
+        this.login = login;
     }
 
     /**
      * @return the photo
      */
     public String getPhoto() {
-	return photo;
+        return photo;
     }
 
     /**
-     * @param photo
-     *            the photo to set
+     * @param photo the photo to set
      */
     public void setPhoto(String photo) {
-	this.photo = photo;
+        this.photo = photo;
     }
 
     /**
      * @return the aboutMe
      */
     public String getAboutMe() {
-	return aboutMe;
+        return aboutMe;
     }
 
     /**
-     * @param aboutMe
-     *            the aboutMe to set
+     * @param aboutMe the aboutMe to set
      */
     public void setAboutMe(String aboutMe) {
-	this.aboutMe = aboutMe;
+        this.aboutMe = aboutMe;
     }
 
     /**

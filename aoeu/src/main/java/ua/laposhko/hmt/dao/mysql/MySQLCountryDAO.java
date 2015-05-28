@@ -5,10 +5,10 @@ import java.util.List;
 import ua.laposhko.hmt.dao.CountryDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Country;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLCountryDAO extends CountryDAO {
 
@@ -17,15 +17,15 @@ public class MySQLCountryDAO extends CountryDAO {
      */
     @Override
     public List<Country> findAllCountries() {
-	return MySQLDAOFactory.findlAllEntities(Country.class);
+        return MySQLDAOFactory.findlAllEntities(Country.class);
     }
 
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.CountryDAO#findCountryById(long)
      */
     @Override
-    public Country findCountryById(long id) {
-	return (Country) MySQLDAOFactory.findEntityById(Country.class, id);
+    public Country findCountryById(User id) {
+        return (Country) MySQLDAOFactory.findEntityById(Country.class, id);
     }
 
     /* (non-Javadoc)
@@ -33,7 +33,7 @@ public class MySQLCountryDAO extends CountryDAO {
      */
     @Override
     public void createCountry(Country country) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(country);
+        MySQLDAOFactory.saveObject(country);
     }
 
     /* (non-Javadoc)
@@ -41,7 +41,7 @@ public class MySQLCountryDAO extends CountryDAO {
      */
     @Override
     public void updateCountry(Country country) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(country);
+        MySQLDAOFactory.updateObject(country);
     }
 
     /* (non-Javadoc)
@@ -49,7 +49,7 @@ public class MySQLCountryDAO extends CountryDAO {
      */
     @Override
     public void deleteCountry(Country country) {
-	MySQLDAOFactory.deleteObject(country);
+        MySQLDAOFactory.deleteObject(country);
     }
 
 }

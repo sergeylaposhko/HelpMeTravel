@@ -9,19 +9,19 @@ import org.hibernate.criterion.SimpleExpression;
 import ua.laposhko.hmt.dao.QuestionDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Question;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQlQuestionDAO extends QuestionDAO {
-    
+
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.QuestionDAO#findAllQuestions(long)
      */
     @Override
     public List<Question> findAllQuestions() {
-	return MySQLDAOFactory.findlAllEntities(Question.class);
+        return MySQLDAOFactory.findlAllEntities(Question.class);
     }
 
     /* (non-Javadoc)
@@ -29,18 +29,18 @@ public class MySQlQuestionDAO extends QuestionDAO {
      */
     @Override
     public List<Question> findQuestionsByCity(long cityId) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("cityId", cityId));
-	return MySQLDAOFactory.fintEntitiesByRestrictions(Question.class, expressions);
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("cityId", cityId));
+        return MySQLDAOFactory.fintEntitiesByRestrictions(Question.class, expressions);
     }
 
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.QuestionDAO#findQuestionById(long)
      */
     @Override
-    public Question findQuestionById(long id) {
-	Question question = (Question) MySQLDAOFactory.findEntityById(Question.class, id);
-	return question;
+    public Question findQuestionById(User id) {
+        Question question = (Question) MySQLDAOFactory.findEntityById(Question.class, id);
+        return question;
     }
 
     /* (non-Javadoc)
@@ -48,7 +48,7 @@ public class MySQlQuestionDAO extends QuestionDAO {
      */
     @Override
     public void createQuestion(Question question) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(question);
+        MySQLDAOFactory.saveObject(question);
     }
 
     /* (non-Javadoc)
@@ -56,7 +56,7 @@ public class MySQlQuestionDAO extends QuestionDAO {
      */
     @Override
     public void updateQuestion(Question question) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(question);
+        MySQLDAOFactory.updateObject(question);
     }
 
     /* (non-Javadoc)
@@ -64,7 +64,7 @@ public class MySQlQuestionDAO extends QuestionDAO {
      */
     @Override
     public void deleteQuestion(Question question) {
-	MySQLDAOFactory.deleteObject(question);
+        MySQLDAOFactory.deleteObject(question);
     }
 
 }

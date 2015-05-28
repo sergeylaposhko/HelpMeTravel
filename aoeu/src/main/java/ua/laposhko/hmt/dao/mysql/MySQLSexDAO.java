@@ -4,10 +4,10 @@ import java.util.List;
 
 import ua.laposhko.hmt.dao.SexDAO;
 import ua.laposhko.hmt.entity.Sex;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLSexDAO extends SexDAO {
 
@@ -16,15 +16,15 @@ public class MySQLSexDAO extends SexDAO {
      */
     @Override
     public List<Sex> findAllSexes() {
-	return MySQLDAOFactory.findlAllEntities(Sex.class);
+        return MySQLDAOFactory.findlAllEntities(Sex.class);
     }
 
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.SexDAO#findSexById(long)
      */
     @Override
-    public Sex findSexById(long sexId) {
-	return (Sex) MySQLDAOFactory.findEntityById(Sex.class, sexId);
+    public Sex findSexById(User sexId) {
+        return (Sex) MySQLDAOFactory.findEntityById(Sex.class, sexId);
     }
 
 }

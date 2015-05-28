@@ -4,8 +4,10 @@ import java.util.List;
 
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Answer;
+import ua.laposhko.hmt.entity.User;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class AnswerDAO.
  *
@@ -13,21 +15,9 @@ import ua.laposhko.hmt.entity.Answer;
  */
 public abstract class AnswerDAO {
 
-    /**
-     * Find all answers.
-     *
-     * @return the list
-     */
     public abstract List<Answer> findAllAnswers();
 
-    /**
-     * Find answer by id.
-     *
-     * @param id
-     *            the id
-     * @return the answer
-     */
-    public abstract Answer findAnswerById(long id);
+    public abstract Answer findAnswerById(User id);
 
 
     /**
@@ -36,29 +26,26 @@ public abstract class AnswerDAO {
      * @param questionId the question id
      * @return the list
      */
-    public abstract List<Answer> findAnswersByQuestion(long questionId);
+    public abstract List<Answer> findAnswersByQuestion(User questionId);
 
     /**
      * Creates the answer.
      *
-     * @param answer
-     *            the answer
+     * @param answer the answer
      */
     public abstract void createAnswer(Answer answer) throws NoSuchEntityException;
 
     /**
      * Update answer.
      *
-     * @param answer
-     *            the answer
+     * @param answer the answer
      */
     public abstract void updateAnswer(Answer answer) throws NoSuchEntityException;
 
     /**
      * Delete answer.
      *
-     * @param answer
-     *            the answer
+     * @param answer the answer
      */
     public abstract void deleteAnswer(Answer answer);
 

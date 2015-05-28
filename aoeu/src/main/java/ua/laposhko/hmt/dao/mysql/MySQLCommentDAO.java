@@ -12,7 +12,6 @@ import ua.laposhko.hmt.entity.Comment;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLCommentDAO extends CommentDAO {
 
@@ -21,9 +20,9 @@ public class MySQLCommentDAO extends CommentDAO {
      */
     @Override
     public List<Comment> findCommentsByPlace(long placeId) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("placeId", placeId));
-	return MySQLDAOFactory.fintEntitiesByRestrictions(Comment.class, expressions);
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("placeId", placeId));
+        return MySQLDAOFactory.fintEntitiesByRestrictions(Comment.class, expressions);
     }
 
     /* (non-Javadoc)
@@ -31,7 +30,7 @@ public class MySQLCommentDAO extends CommentDAO {
      */
     @Override
     public void createComment(Comment comment) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(comment);
+        MySQLDAOFactory.saveObject(comment);
     }
 
     /* (non-Javadoc)
@@ -39,7 +38,7 @@ public class MySQLCommentDAO extends CommentDAO {
      */
     @Override
     public void deleteComment(Comment comment) {
-	MySQLDAOFactory.deleteObject(comment);
+        MySQLDAOFactory.deleteObject(comment);
     }
 
     /* (non-Javadoc)
@@ -47,7 +46,7 @@ public class MySQLCommentDAO extends CommentDAO {
      */
     @Override
     public void updateComment(Comment comment) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(comment);
+        MySQLDAOFactory.updateObject(comment);
     }
 
 }

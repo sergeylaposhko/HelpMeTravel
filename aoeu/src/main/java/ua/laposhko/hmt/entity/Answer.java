@@ -1,112 +1,77 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * @author Sergey Laposhko
- *
  */
-public class Answer {
+@Entity
+@Table(name = "answer")
+public class Answer implements Serializable {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long userId;
-    private long questionId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
+    @Column(name = "text", columnDefinition = "text")
     private String text;
     private Date date;
 
-    /**
-     * @param id
-     * @param userId
-     * @param questionId
-     * @param text
-     */
-    public Answer(long id, long userId, long questionId, String text, Date date) {
-	super();
-	this.id = id;
-	this.userId = userId;
-	this.questionId = questionId;
-	this.text = text;
-	this.date = date;
-    }
-
-    /**
-     * 
-     */
     public Answer() {
     }
 
-    /**
-     * @return the id
-     */
+    public Answer(long id, User user, Question question, String text, Date date) {
+        this.id = id;
+        this.user = user;
+        this.question = question;
+        this.text = text;
+        this.date = date;
+    }
+
     public long getId() {
-	return id;
+        return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
-    /**
-     * @return the userId
-     */
-    public long getUserId() {
-	return userId;
+    public User getUser() {
+        return user;
     }
 
-    /**
-     * @param userId
-     *            the userId to set
-     */
-    public void setUserId(long userId) {
-	this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    /**
-     * @return the questionId
-     */
-    public long getQuestionId() {
-	return questionId;
+    public Question getQuestion() {
+        return question;
     }
 
-    /**
-     * @param questionId
-     *            the questionId to set
-     */
-    public void setQuestionId(long questionId) {
-	this.questionId = questionId;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
-    /**
-     * @return the text
-     */
     public String getText() {
-	return text;
+        return text;
     }
 
-    /**
-     * @param text
-     *            the text to set
-     */
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
 
-    /**
-     * @return the date
-     */
     public Date getDate() {
         return date;
     }
 
-    /**
-     * @param date the date to set
-     */
     public void setDate(Date date) {
         this.date = date;
     }
-    
 }

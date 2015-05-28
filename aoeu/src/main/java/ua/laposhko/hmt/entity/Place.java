@@ -1,131 +1,81 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.*;
+
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "place")
 public class Place {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long cityId;
-    private long userId;
+    @JoinColumn(name = "city_id")
+    private City city;
+    @JoinColumn(name = "user_id")
+    private User user;
     private String name;
     private String description;
     private String photo;
 
-    /**
-     * @param id
-     * @param cityId
-     * @param userId
-     * @param name
-     * @param description
-     * @param photo
-     */
-    public Place(long id, long cityId, long userId, String name,
-	    String description, String photo) {
-	super();
-	this.id = id;
-	this.cityId = cityId;
-	this.userId = userId;
-	this.name = name;
-	this.description = description;
-	this.photo = photo;
+    public Place(City city, User user, String name, String description, String photo) {
+        this.city = city;
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
     }
 
-    /**
-     * 
-     */
     public Place() {
     }
 
-    /**
-     * @return the id
-     */
     public long getId() {
-	return id;
+        return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
-    /**
-     * @return the cityId
-     */
-    public long getCityId() {
-	return cityId;
+    public City getCity() {
+        return city;
     }
 
-    /**
-     * @param cityId
-     *            the cityId to set
-     */
-    public void setCityId(long cityId) {
-	this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
-    /**
-     * @return the userId
-     */
-    public long getUserId() {
-	return userId;
+    public User getUser() {
+        return user;
     }
 
-    /**
-     * @param userId
-     *            the userId to set
-     */
-    public void setUserId(long userId) {
-	this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
-	return name;
+        return name;
     }
 
-    /**
-     * @param name
-     *            the name to set
-     */
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
-    /**
-     * @return the description
-     */
     public String getDescription() {
-	return description;
+        return description;
     }
 
-    /**
-     * @param description
-     *            the description to set
-     */
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
-    /**
-     * @return the photo
-     */
     public String getPhoto() {
-	return photo;
+        return photo;
     }
 
-    /**
-     * @param photo
-     *            the photo to set
-     */
     public void setPhoto(String photo) {
-	this.photo = photo;
+        this.photo = photo;
     }
-
 }

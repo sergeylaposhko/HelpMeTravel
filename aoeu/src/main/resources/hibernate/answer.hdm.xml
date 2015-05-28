@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
- "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="ua.laposhko.hmt.entity.Answer" table="answer">
-		<id column="id" name="id" type="java.lang.Long">
-			<generator class="increment" />
-		</id>
+    <class name="ua.laposhko.hmt.entity.Answer" table="answer">
+        <id column="id" name="id" type="java.lang.Long">
+            <generator class="increment"/>
+        </id>
 
-		<property column="user_id" name="userId" type="java.lang.Long" />
-		<property column="question_id" name="questionId" type="java.lang.Long" />
-		<property column="text" name="text" type="java.lang.String" />
-		<property column="date" name="date" type="java.sql.Date" />
+        <property column="user_id" name="userId" type="java.lang.Long"/>
+        <property column="question_id" name="questionId" type="java.lang.Long"/>
+        <property column="text" name="text" type="java.lang.String"/>
+        <property column="date" name="date" type="java.sql.Date"/>
 
-
-
-	</class>
+    </class>
 </hibernate-mapping>

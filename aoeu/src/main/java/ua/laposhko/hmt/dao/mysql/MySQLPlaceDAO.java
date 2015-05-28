@@ -9,10 +9,10 @@ import org.hibernate.criterion.SimpleExpression;
 import ua.laposhko.hmt.dao.PlaceDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Place;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLPlaceDAO extends PlaceDAO {
 
@@ -23,7 +23,7 @@ public class MySQLPlaceDAO extends PlaceDAO {
      */
     @Override
     public List<Place> findAllPlaces() {
-	return MySQLDAOFactory.findlAllEntities(Place.class);
+        return MySQLDAOFactory.findlAllEntities(Place.class);
     }
 
     /*
@@ -32,11 +32,11 @@ public class MySQLPlaceDAO extends PlaceDAO {
      * @see ua.laposhko.hmt.dao.PlaceDAO#findPlacesByCity()
      */
     @Override
-    public List<Place> findPlacesByCity(long cityId) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("cityId", cityId));
-	return MySQLDAOFactory.fintEntitiesByRestrictions(Place.class,
-		expressions);
+    public List<Place> findPlacesByCity(User cityId) {
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("cityId", cityId));
+        return MySQLDAOFactory.fintEntitiesByRestrictions(Place.class,
+                expressions);
     }
 
     /*
@@ -45,8 +45,8 @@ public class MySQLPlaceDAO extends PlaceDAO {
      * @see ua.laposhko.hmt.dao.PlaceDAO#findPlaceById()
      */
     @Override
-    public Place findPlaceById(long id) {
-	return (Place) MySQLDAOFactory.findEntityById(Place.class, id);
+    public Place findPlaceById(User id) {
+        return (Place) MySQLDAOFactory.findEntityById(Place.class, id);
     }
 
     /*
@@ -57,7 +57,7 @@ public class MySQLPlaceDAO extends PlaceDAO {
      */
     @Override
     public void createPlace(Place place) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(place);
+        MySQLDAOFactory.saveObject(place);
     }
 
     /*
@@ -68,7 +68,7 @@ public class MySQLPlaceDAO extends PlaceDAO {
      */
     @Override
     public void updatePlace(Place place) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(place);
+        MySQLDAOFactory.updateObject(place);
     }
 
     /*
@@ -79,7 +79,7 @@ public class MySQLPlaceDAO extends PlaceDAO {
      */
     @Override
     public void deletePlace(Place place) {
-	MySQLDAOFactory.deleteObject(place);
+        MySQLDAOFactory.deleteObject(place);
     }
 
 }

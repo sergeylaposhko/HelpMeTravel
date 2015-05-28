@@ -1,29 +1,36 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.*;
+
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "user_city")
 public class UserCity {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long userId;
-    private long cityId;
+    @JoinColumn(name = "user_id")
+    private User userId;
+    @JoinColumn(name = "city_id")
+    private City cityId;
 
     /**
      * @param id
      * @param userId
      * @param cityId
      */
-    public UserCity(long id, long userId, long cityId) {
-	super();
-	this.id = id;
-	this.userId = userId;
-	this.cityId = cityId;
+    public UserCity(long id, User userId, City cityId) {
+        super();
+        this.id = id;
+        this.userId = userId;
+        this.cityId = cityId;
     }
 
     /**
-     * 
+     *
      */
     public UserCity() {
     }
@@ -32,45 +39,42 @@ public class UserCity {
      * @return the id
      */
     public long getId() {
-	return id;
+        return id;
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
      * @return the userId
      */
-    public long getUserId() {
-	return userId;
+    public User getUserId() {
+        return userId;
     }
 
     /**
-     * @param userId
-     *            the userId to set
+     * @param userId the userId to set
      */
-    public void setUserId(long userId) {
-	this.userId = userId;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     /**
      * @return the cityId
      */
-    public long getCityId() {
-	return cityId;
+    public City getCityId() {
+        return cityId;
     }
 
     /**
-     * @param cityId
-     *            the cityId to set
+     * @param cityId the cityId to set
      */
-    public void setCityId(long cityId) {
-	this.cityId = cityId;
+    public void setCityId(City cityId) {
+        this.cityId = cityId;
     }
 
 }

@@ -4,7 +4,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class Log4JConfig {
 
@@ -14,5 +13,5 @@ public class Log4JConfig {
         } catch (Exception ex) {
         }
     }
-    
+
 }

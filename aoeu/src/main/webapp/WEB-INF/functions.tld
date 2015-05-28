@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
-	<tlib-version>2.0</tlib-version>
-	<short-name>functions</short-name>
-	<uri>http://ua.nure.sigma.store/functions</uri>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+    <tlib-version>2.0</tlib-version>
+    <short-name>functions</short-name>
+    <uri>http://ua.nure.sigma.store/functions</uri>
 
-	<!-- User defined function -->
-	<function>
-		<name>isAdded</name>
-		<function-class>ua.nure.sigma.store.tag.TagFunctions</function-class>
-		<function-signature>java.lang.Boolean isAdded(java.lang.Integer, ua.nure.sigma.store.logic.Cart)</function-signature>
-	</function>
+    <!-- User defined function -->
+    <function>
+        <name>isAdded</name>
+        <function-class>ua.nure.sigma.store.tag.TagFunctions</function-class>
+        <function-signature>java.lang.Boolean isAdded(java.lang.Integer, ua.nure.sigma.store.logic.Cart)
+        </function-signature>
+    </function>
 
 </taglib>

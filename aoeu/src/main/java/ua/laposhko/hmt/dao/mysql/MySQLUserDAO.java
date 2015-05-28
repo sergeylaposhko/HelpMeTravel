@@ -12,7 +12,6 @@ import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLUserDAO extends UserDAO {
 
@@ -21,7 +20,7 @@ public class MySQLUserDAO extends UserDAO {
      */
     @Override
     public List<User> findlAllUsers() {
-	return MySQLDAOFactory.findlAllEntities(User.class);
+        return MySQLDAOFactory.findlAllEntities(User.class);
     }
 
     /* (non-Javadoc)
@@ -29,7 +28,7 @@ public class MySQLUserDAO extends UserDAO {
      */
     @Override
     public void createUser(User user) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(user);
+        MySQLDAOFactory.saveObject(user);
     }
 
     /* (non-Javadoc)
@@ -37,7 +36,7 @@ public class MySQLUserDAO extends UserDAO {
      */
     @Override
     public void updateUser(User user) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(user);
+        MySQLDAOFactory.updateObject(user);
     }
 
     /* (non-Javadoc)
@@ -45,16 +44,16 @@ public class MySQLUserDAO extends UserDAO {
      */
     @Override
     public void deleteUser(User user) {
-	MySQLDAOFactory.deleteObject(user);
+        MySQLDAOFactory.deleteObject(user);
     }
 
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.UserDAO#findUserById(long)
      */
     @Override
-    public User findUserById(long id) {
-	User user = (User) MySQLDAOFactory.findEntityById(User.class, id);
-	return user;
+    public User findUserById(User id) {
+        User user = (User) MySQLDAOFactory.findEntityById(User.class, id);
+        return user;
     }
 
     /* (non-Javadoc)
@@ -62,13 +61,13 @@ public class MySQLUserDAO extends UserDAO {
      */
     @Override
     public User findUserByLogin(String login) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("login", login));
-	List<User> res = MySQLDAOFactory.fintEntitiesByRestrictions(User.class, expressions);
-	if(res.size() > 1){
-	    throw new RuntimeException("Database contains more then one user with login " + login);
-	}
-	return res.size() == 0 ? null : res.get(0);
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("login", login));
+        List<User> res = MySQLDAOFactory.fintEntitiesByRestrictions(User.class, expressions);
+        if (res.size() > 1) {
+            throw new RuntimeException("Database contains more then one user with login " + login);
+        }
+        return res.size() == 0 ? null : res.get(0);
     }
 
 }

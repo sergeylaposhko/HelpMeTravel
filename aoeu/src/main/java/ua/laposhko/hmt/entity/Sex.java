@@ -1,26 +1,34 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "sex")
 public class Sex {
 
-    private long id;
+    @Id
+    @GeneratedValue
+    private int id;
     private String name;
 
     /**
      * @param id
      * @param name
      */
-    public Sex(long id, String name) {
-	super();
-	this.id = id;
-	this.name = name;
+    public Sex(int id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
     }
 
     /**
-     * 
+     *
      */
     public Sex() {
     }
@@ -28,31 +36,29 @@ public class Sex {
     /**
      * @return the id
      */
-    public long getId() {
-	return id;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
-    public void setId(long id) {
-	this.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
      * @return the name
      */
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
 }

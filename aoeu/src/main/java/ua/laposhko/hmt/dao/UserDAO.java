@@ -28,8 +28,8 @@ public abstract class UserDAO {
      * @param id the id
      * @return the user
      */
-    public abstract User findUserById(long id);
-    
+    public abstract User findUserById(User id);
+
     /**
      * Find user by login.
      *
@@ -37,7 +37,7 @@ public abstract class UserDAO {
      * @return the user
      */
     public abstract User findUserByLogin(String login);
-    
+
     /**
      * Creates the user.
      *

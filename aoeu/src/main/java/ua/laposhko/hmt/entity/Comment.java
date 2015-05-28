@@ -1,98 +1,54 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.*;
+
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "comment")
 public class Comment {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long placeId;
-    private long userId;
+    @JoinColumn(name = "place_id")
+    @ManyToOne
+    private Place place;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String text;
 
-    /**
-     * @param id
-     * @param placeId
-     * @param userId
-     * @param text
-     */
-    public Comment(long id, long placeId, long userId, String text) {
-	super();
-	this.id = id;
-	this.placeId = placeId;
-	this.userId = userId;
-	this.text = text;
-    }
-
-    
-    
-    /**
-     * 
-     */
-    public Comment() {
-    }
-
-
-
-    /**
-     * @return the id
-     */
     public long getId() {
-	return id;
+        return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
-    /**
-     * @return the placeId
-     */
-    public long getPlaceId() {
-	return placeId;
+    public Place getPlace() {
+        return place;
     }
 
-    /**
-     * @param placeId
-     *            the placeId to set
-     */
-    public void setPlaceId(long placeId) {
-	this.placeId = placeId;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
-    /**
-     * @return the userId
-     */
-    public long getUserId() {
-	return userId;
+    public User getUser() {
+        return user;
     }
 
-    /**
-     * @param userId
-     *            the userId to set
-     */
-    public void setUserId(long userId) {
-	this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    /**
-     * @return the text
-     */
     public String getText() {
-	return text;
+        return text;
     }
 
-    /**
-     * @param text
-     *            the text to set
-     */
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
-
 }

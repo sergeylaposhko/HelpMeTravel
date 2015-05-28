@@ -10,10 +10,10 @@ import org.hibernate.criterion.SimpleExpression;
 import ua.laposhko.hmt.dao.AnswerDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Answer;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLAnswerDAO extends AnswerDAO {
 
@@ -26,8 +26,8 @@ public class MySQLAnswerDAO extends AnswerDAO {
      */
     @Override
     public List<Answer> findAllAnswers() {
-	List<Answer> answers = MySQLDAOFactory.findlAllEntities(Answer.class);
-	return answers;
+        List<Answer> answers = MySQLDAOFactory.findlAllEntities(Answer.class);
+        return answers;
     }
 
     /*
@@ -36,9 +36,9 @@ public class MySQLAnswerDAO extends AnswerDAO {
      * @see ua.laposhko.hmt.dao.AnswerDAO#findAnswerById(long)
      */
     @Override
-    public Answer findAnswerById(long id) {
-	Answer answer = (Answer) MySQLDAOFactory.findEntityById(Answer.class, id);
-	return answer;
+    public Answer findAnswerById(User id) {
+        Answer answer = (Answer) MySQLDAOFactory.findEntityById(Answer.class, id);
+        return answer;
     }
 
     /*
@@ -47,14 +47,14 @@ public class MySQLAnswerDAO extends AnswerDAO {
      * @see ua.laposhko.hmt.dao.AnswerDAO#findAnswerByQuestion(long)
      */
     @Override
-    public List<Answer> findAnswersByQuestion(long questionId) {
-	List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
-	simpleExpressions.add(Restrictions.eq("questionId", questionId));
-	List<Answer> answers = MySQLDAOFactory.fintEntitiesByRestrictions(Answer.class, simpleExpressions);
-	if(answers.size() == 0){
-	    LOG.info("Answers for question empty empty: " + questionId);
-	}
-	return answers;
+    public List<Answer> findAnswersByQuestion(User questionId) {
+        List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
+        simpleExpressions.add(Restrictions.eq("questionId", questionId));
+        List<Answer> answers = MySQLDAOFactory.fintEntitiesByRestrictions(Answer.class, simpleExpressions);
+        if (answers.size() == 0) {
+            LOG.info("Answers for question empty empty: " + questionId);
+        }
+        return answers;
     }
 
     /*
@@ -65,7 +65,7 @@ public class MySQLAnswerDAO extends AnswerDAO {
      */
     @Override
     public void createAnswer(Answer answer) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(answer);
+        MySQLDAOFactory.saveObject(answer);
     }
 
     /*
@@ -76,7 +76,7 @@ public class MySQLAnswerDAO extends AnswerDAO {
      */
     @Override
     public void updateAnswer(Answer answer) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(answer);
+        MySQLDAOFactory.updateObject(answer);
     }
 
     /*
@@ -87,7 +87,7 @@ public class MySQLAnswerDAO extends AnswerDAO {
      */
     @Override
     public void deleteAnswer(Answer answer) {
-	MySQLDAOFactory.deleteObject(answer);
+        MySQLDAOFactory.deleteObject(answer);
     }
 
 }

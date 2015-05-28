@@ -8,11 +8,11 @@ import org.hibernate.criterion.SimpleExpression;
 
 import ua.laposhko.hmt.dao.UserCityDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
+import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.entity.UserCity;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLUserCityDAO extends UserCityDAO {
 
@@ -21,19 +21,19 @@ public class MySQLUserCityDAO extends UserCityDAO {
      */
     @Override
     public List<UserCity> findUserCitiesByUser(long userId) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("userId", userId));
-	return MySQLDAOFactory.fintEntitiesByRestrictions(UserCity.class, expressions);
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("userId", userId));
+        return MySQLDAOFactory.fintEntitiesByRestrictions(UserCity.class, expressions);
     }
 
     /* (non-Javadoc)
      * @see ua.laposhko.hmt.dao.UserCityDAO#findUserCitiesByCity(long)
      */
     @Override
-    public List<UserCity> findUserCitiesByCity(long cityId) {
-	List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
-	expressions.add(Restrictions.eq("cityId", cityId));
-	return MySQLDAOFactory.fintEntitiesByRestrictions(UserCity.class, expressions);
+    public List<UserCity> findUserCitiesByCity(User cityId) {
+        List<SimpleExpression> expressions = new ArrayList<SimpleExpression>();
+        expressions.add(Restrictions.eq("cityId", cityId));
+        return MySQLDAOFactory.fintEntitiesByRestrictions(UserCity.class, expressions);
     }
 
     /* (non-Javadoc)
@@ -41,7 +41,7 @@ public class MySQLUserCityDAO extends UserCityDAO {
      */
     @Override
     public void createUserCity(UserCity userCity) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(userCity);
+        MySQLDAOFactory.saveObject(userCity);
     }
 
     /* (non-Javadoc)
@@ -49,7 +49,7 @@ public class MySQLUserCityDAO extends UserCityDAO {
      */
     @Override
     public void updateUserCity(UserCity userCity) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(userCity);
+        MySQLDAOFactory.updateObject(userCity);
     }
 
     /* (non-Javadoc)
@@ -57,7 +57,7 @@ public class MySQLUserCityDAO extends UserCityDAO {
      */
     @Override
     public void deleteUserCity(UserCity userCity) {
-	MySQLDAOFactory.deleteObject(userCity);
+        MySQLDAOFactory.deleteObject(userCity);
     }
 
 }

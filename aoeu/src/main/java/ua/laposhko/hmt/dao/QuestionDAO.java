@@ -4,6 +4,7 @@ import java.util.List;
 
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Question;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * The Class QuestionDAO.
@@ -34,7 +35,7 @@ public abstract class QuestionDAO {
      * @param id the id
      * @return the question
      */
-    public abstract Question findQuestionById(long id);
+    public abstract Question findQuestionById(User id);
 
     /**
      * Creates the question.
@@ -56,5 +57,5 @@ public abstract class QuestionDAO {
      * @param question the question
      */
     public abstract void deleteQuestion(Question question);
-    
+
 }

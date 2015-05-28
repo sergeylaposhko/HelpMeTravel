@@ -4,6 +4,7 @@ import java.util.List;
 
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Country;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * The Class CountryDAO.
@@ -22,35 +23,31 @@ public abstract class CountryDAO {
     /**
      * Find country by id.
      *
-     * @param id
-     *            the id
+     * @param id the id
      * @return the country
      */
-    public abstract Country findCountryById(long id);
+    public abstract Country findCountryById(User id);
 
     /**
      * Creates the country.
      *
-     * @param country
-     *            the country
+     * @param country the country
      */
     public abstract void createCountry(Country country)
-	    throws NoSuchEntityException;
+            throws NoSuchEntityException;
 
     /**
      * Update country.
      *
-     * @param country
-     *            the country
+     * @param country the country
      */
     public abstract void updateCountry(Country country)
-	    throws NoSuchEntityException;
+            throws NoSuchEntityException;
 
     /**
      * Delete country.
      *
-     * @param country
-     *            the country
+     * @param country the country
      */
     public abstract void deleteCountry(Country country);
 

@@ -8,25 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Sergey Laposhko
- *
  */
-@XmlRootElement(name="error")
+@XmlRootElement(name = "error")
 public class WrongParamMessage {
 
     private List<String> wrongParams;
-    
+
     private String message;
-    
-    
-    public WrongParamMessage(String message, List<String> wrongParams){
-	this.message = message;
-	this.wrongParams = wrongParams;
+
+
+    public WrongParamMessage(String message, List<String> wrongParams) {
+        this.message = message;
+        this.wrongParams = wrongParams;
     }
 
-    public WrongParamMessage(String message, String wrongParam){
-	this.message = message;
-	this.wrongParams = new ArrayList<String>(1);
-	wrongParams.add(wrongParam);
+    public WrongParamMessage(String message, String wrongParam) {
+        this.message = message;
+        this.wrongParams = new ArrayList<String>(1);
+        wrongParams.add(wrongParam);
     }
 
     /**
@@ -53,7 +52,6 @@ public class WrongParamMessage {
     public void setMessage(String message) {
         this.message = message;
     }
-    
-    
-    
+
+
 }

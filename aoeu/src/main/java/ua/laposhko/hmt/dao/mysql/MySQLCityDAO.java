@@ -9,10 +9,10 @@ import org.hibernate.criterion.SimpleExpression;
 import ua.laposhko.hmt.dao.CityDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.City;
+import ua.laposhko.hmt.entity.User;
 
 /**
  * @author Sergey Laposhko
- *
  */
 public class MySQLCityDAO extends CityDAO {
 
@@ -23,8 +23,8 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public List<City> findAllCities() {
-	List<City> cities = MySQLDAOFactory.findlAllEntities(City.class);
-	return cities;
+        List<City> cities = MySQLDAOFactory.findlAllEntities(City.class);
+        return cities;
     }
 
     /*
@@ -34,11 +34,11 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public List<City> findCitiesByCountry(long countryId) {
-	List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
-	simpleExpressions.add(Restrictions.eq("countryId", countryId));
-	List<City> cities = MySQLDAOFactory.fintEntitiesByRestrictions(
-		City.class, simpleExpressions);
-	return cities;
+        List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
+        simpleExpressions.add(Restrictions.eq("countryId", countryId));
+        List<City> cities = MySQLDAOFactory.fintEntitiesByRestrictions(
+                City.class, simpleExpressions);
+        return cities;
     }
 
     /*
@@ -47,8 +47,8 @@ public class MySQLCityDAO extends CityDAO {
      * @see ua.laposhko.hmt.dao.CityDAO#findCityById(long)
      */
     @Override
-    public City findCityById(long id) {
-	return (City) MySQLDAOFactory.findEntityById(City.class, id);
+    public City findCityById(User id) {
+        return (City) MySQLDAOFactory.findEntityById(City.class, id);
     }
 
     /*
@@ -58,7 +58,7 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public void createCity(City city) throws NoSuchEntityException {
-	MySQLDAOFactory.saveObject(city);
+        MySQLDAOFactory.saveObject(city);
     }
 
     /*
@@ -68,7 +68,7 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public void updateCity(City city) throws NoSuchEntityException {
-	MySQLDAOFactory.updateObject(city);
+        MySQLDAOFactory.updateObject(city);
     }
 
     /*
@@ -78,7 +78,7 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public void deleteCity(City city) {
-	MySQLDAOFactory.deleteObject(city);
+        MySQLDAOFactory.deleteObject(city);
     }
 
     /*
@@ -88,11 +88,11 @@ public class MySQLCityDAO extends CityDAO {
      */
     @Override
     public List<City> findCityByName(String name) {
-	List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
-	simpleExpressions.add(Restrictions.like("name", "%" + name + "%"));
-	List<City> cities = MySQLDAOFactory.fintEntitiesByRestrictions(
-		City.class, simpleExpressions);
-	return cities;
+        List<SimpleExpression> simpleExpressions = new ArrayList<SimpleExpression>();
+        simpleExpressions.add(Restrictions.like("name", "%" + name + "%"));
+        List<City> cities = MySQLDAOFactory.fintEntitiesByRestrictions(
+                City.class, simpleExpressions);
+        return cities;
     }
 
 }

@@ -1,66 +1,44 @@
 package ua.laposhko.hmt.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import java.io.Serializable;
 
 
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "country")
 @XmlRootElement
-public class Country {
+public class Country implements Serializable {
 
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
 
-    /**
-     * @param id
-     * @param name
-     */
-    public Country(long id, String name) {
-	super();
-	this.id = id;
-	this.name = name;
+    public Country(String name) {
+        this.name = name;
     }
 
-    /**
-     * 
-     */
-    public Country() {
-    }
-
-    /**
-     * @return the id
-     */
-    @XmlElement
     public long getId() {
-	return id;
+        return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
-    /**
-     * @return the name
-     */
-    @XmlElement
     public String getName() {
-	return name;
+        return name;
     }
 
-    /**
-     * @param name
-     *            the name to set
-     */
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
-
 }

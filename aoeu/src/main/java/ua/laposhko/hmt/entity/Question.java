@@ -1,43 +1,44 @@
 package ua.laposhko.hmt.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Sergey Laposhko
- *
  */
+@Entity
+@Table(name = "question")
 @XmlRootElement(name = "question")
-public class Question {
+public class Question implements Serializable {
 
+    @Id
+    @GeneratedValue
     private long id;
-    private long cityId;
-    private long userId;
+    @Column(name = "city_id")
+    private City cityId;
+    @JoinColumn(name = "user_id")
+    private User userId;
     private String header;
     private String text;
     private Date date;
 
-    /**
-     * @param id
-     * @param cityId
-     * @param userId
-     * @param text
-     */
-    public Question(long id, long placeId, long userId, String header,
-	    String text, Date date) {
-	super();
-	this.id = id;
-	this.cityId = placeId;
-	this.userId = userId;
-	this.header = header;
-	this.text = text;
-	this.date = date;
+    public Question(long id, City placeId, User userId, String header,
+                    String text, Date date) {
+        super();
+        this.id = id;
+        this.cityId = placeId;
+        this.userId = userId;
+        this.header = header;
+        this.text = text;
+        this.date = date;
     }
 
     /**
-     * 
+     *
      */
     public Question() {
     }
@@ -47,47 +48,44 @@ public class Question {
      */
     @XmlElement
     public long getId() {
-	return id;
+        return id;
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(long id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
      * @return the cityId
      */
     @XmlElement
-    public long getCityId() {
-	return cityId;
+    public City getCityId() {
+        return cityId;
     }
 
     /**
-     * @param cityId
-     *            the cityId to set
+     * @param cityId the cityId to set
      */
-    public void setCityId(long placeId) {
-	this.cityId = placeId;
+    public void setCity(City placeId) {
+        this.cityId = placeId;
     }
 
     /**
      * @return the userId
      */
     @XmlElement
-    public long getUserId() {
-	return userId;
+    public User getUserId() {
+        return userId;
     }
 
     /**
-     * @param userId
-     *            the userId to set
+     * @param userId the userId to set
      */
-    public void setUserId(long userId) {
-	this.userId = userId;
+    public void setUser(User userId) {
+        this.userId = userId;
     }
 
     /**
@@ -95,15 +93,14 @@ public class Question {
      */
     @XmlElement
     public String getText() {
-	return text;
+        return text;
     }
 
     /**
-     * @param text
-     *            the text to set
+     * @param text the text to set
      */
     public void setText(String text) {
-	this.text = text;
+        this.text = text;
     }
 
     /**
@@ -111,15 +108,14 @@ public class Question {
      */
     @XmlElement
     public Date getDate() {
-	return date;
+        return date;
     }
 
     /**
-     * @param date
-     *            the date to set
+     * @param date the date to set
      */
     public void setDate(Date date) {
-	this.date = date;
+        this.date = date;
     }
 
     /**

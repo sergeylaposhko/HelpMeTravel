@@ -1,0 +1,110 @@
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<button onclick="sideInfo()" class="btn btn-default" id="dropdown-button">
+    <i class="large mdi-action-list"></i>
+</button>
+
+
+<div id="video-modal" class="modal">
+            <iframe id="video-div" width="100%" height="100%" ng-src="{{route.points[currentPosition].videoUrl}}" frameborder="0"
+                    allowfullscreen></iframe>
+        <!-- <div id="video-div" height="100%">
+        </div> -->
+</div>
+
+<div class="centered">
+    <h3>
+        {{currentPosition + 1}} / {{route.points.length}}
+    </h3>
+</div>
+
+<div>
+    <button id="nextPointButton" class="btn control-button" ng-click="next()">
+        <i class="large mdi-hardware-keyboard-arrow-right"></i>
+    </button>
+    <button id="previousPointButton" class="btn control-button" ng-click="previous()">
+        <i class="large mdi-hardware-keyboard-arrow-left"></i>
+    </button>
+</div>
+
+<div class="col s12 m2">
+    <div id="map" class="show-me-small z-depth-3"></div>
+</div>
+
+<div id="panorama" class="map-element"></div>
+
+<link rel="stylesheet" href="browser.css">
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-content">
+            <br/><br/><br/><br/>
+
+            <h4>{{route.points[currentPosition].title}}</h4>
+            <span>{{route.points[currentPosition].info}}</span>
+
+            <audio id="player" ng-src="{{route.points[currentPosition].musicUrl}}" autoplay></audio>
+            <br/>
+
+            <div class="volume-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <button id="play-controller" class="btn" ng-click="toggleAudio()">
+                            <i class="mdi-av-play-arrow small" ng-show="!isPlaying"></i>
+                            <i class="mdi-av-pause small" ng-show="isPlaying"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <i class="mdi-av-volume-up small"></i>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="volume-control" type="range" id="test5" min="0" max="1" step="0.1"
+                               onchange="document.getElementById('player').volume = document.getElementById('volume-control').value"/>
+                    </div>
+                </div>
+            </div>
+            <button id="video-button" data-target="video-modal" class="btn modal-trigger">Watch video</button>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+    });
+    $('.dropdown-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrain_width: false, // Does not change width of dropdown to that of the activator
+        gutter: 0, // Spacing from edge
+        belowOrigin: true // Displays dropdown below the button
+    });
+    $('.modal-trigger').leanModal({
+        ready: function () {
+            toggleVideo();
+        },
+        complete: function () {
+            console.log('Hidden!!!');
+            toggleVideo('hide');
+        }
+    });
+
+    function toggleVideo(state) {
+        // if state == 'hide', hide. Else: show video
+        var div = document.getElementById("video-modal");
+        var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
+        //div.style.display = state == 'hide' ? 'none' : '';
+        func = state == 'hide' ? 'pauseVideo' : 'playVideo';
+        iframe.postMessage('{"event":"command","func":"' + func + '","args":""}', '*');
+    }
+</script>
+
+<script>
+    function sideInfo() {
+        $("#wrapper").toggleClass("toggled");
+    }
+</script>
