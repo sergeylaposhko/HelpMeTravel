@@ -1,23 +1,13 @@
 package ua.laposhko.hmt.web;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.SexDAO;
 import ua.laposhko.hmt.dao.UserDAO;
@@ -25,13 +15,18 @@ import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Sex;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.service.city.ICityService;
-import ua.laposhko.hmt.service.country.ICountryService;
 import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.WrongParamException;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergey Laposhko
@@ -45,11 +40,11 @@ import com.sun.jersey.multipart.FormDataParam;
  * 
  * //logout user/logout?sessionID=''
  */
-@Path("/user")
-public class UserService extends AbstractService {
+@Controller
+@RequestMapping("/user")
+public class UserWebService extends AbstractWebService {
 
     private IUserService<User> userService;
-    private ICountryService countryService;
     private ICityService<City> cityService;
 
     @Autowired
@@ -62,27 +57,18 @@ public class UserService extends AbstractService {
         this.userService = userService;
     }
 
-    @Autowired
-    public void setCountryService(ICountryService countryService) {
-        this.countryService = countryService;
-    }
+    private static final Logger LOGGER = Logger.getLogger(UserWebService.class);
 
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
-
-    @BadgerFish
-    @POST
-    @Path("/register")
-    @Produces("application/json")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response registerUser(@FormDataParam("login") String login,
-                                 @FormDataParam("firstName") String firstName,
-                                 @FormDataParam("lastName") String lastName,
-                                 @FormDataParam("sex") String sex,
-                                 @FormDataParam("countryId") int cityId,
-                                 @FormDataParam("photo") InputStream uploadedInputStream,
-                                 @FormDataParam("photo") FormDataContentDisposition fileDetail,
-                                 @FormDataParam("aboutMe") String aboutMe,
-                                 @FormDataParam("password") String password) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA)
+    public @ResponseBody
+    Response registerUser(@RequestParam("login") String login,
+                                 @RequestParam("firstName") String firstName,
+                                 @RequestParam("lastName") String lastName,
+                                 @RequestParam("sex") String sex,
+                                 @RequestParam("countryId") int cityId,
+                                 @RequestParam("photo") MultipartFile photoFile,
+                                 @RequestParam("aboutMe") String aboutMe,
+                                 @RequestParam("password") String password) throws IOException {
         LOGGER.info("Start registerUser command with params " + login + ", "
                 + sex + ", " + cityId);
         // hashing incoming password
@@ -118,21 +104,18 @@ public class UserService extends AbstractService {
 
         userService.save(newUser);
 
-        if (uploadedInputStream != null && fileDetail != null) {
-            String location = ImageSaver.saveUserPhoto(uploadedInputStream,
-                    newUser, fileDetail.getFileName());
+        if (photoFile != null) {
+            String location = ImageSaver.saveUserPhoto(photoFile.getInputStream(),
+                    newUser, photoFile.getName());
             newUser.setPhoto(location);
             userService.update(newUser);
         }
         return Response.status(Response.Status.OK).build();
     }
 
-    @BadgerFish
-    @POST
-    @Path("/login")
-    @Produces("application/json")
-    public Map<String, String> login(@FormParam("login") String login,
-                                     @FormParam("password") String password) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public @ResponseBody Map<String, String> login(@RequestParam("login") String login,
+                                     @RequestParam("password") String password) {
         LOGGER.debug("Starting loginCommand for login: " + login + password);
         password = String.valueOf(password.hashCode());
         DAOFactory factory = DAOFactory.getIntsatnce();
@@ -164,11 +147,8 @@ public class UserService extends AbstractService {
         return res;
     }
 
-    @BadgerFish
-    @POST
-    @Path("/logout")
-    @Produces("application/json")
-    public Response logout(@FormParam("sessionId") String sessionId) {
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public @ResponseBody Response logout(@FormParam("sessionId") String sessionId) {
         LOGGER.info("Start logout command withsessioinId: " + sessionId);
 
         SessionManager sessionManager = SessionManager.getInstance();

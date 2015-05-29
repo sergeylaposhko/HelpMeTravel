@@ -29,7 +29,7 @@ public class GenericHibernateDaoImpl<T extends Serializable> implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public T findById(int id) {
+    public T findById(long id) {
         return (T) getCurrentSession().get(clazz, id);
     }
 

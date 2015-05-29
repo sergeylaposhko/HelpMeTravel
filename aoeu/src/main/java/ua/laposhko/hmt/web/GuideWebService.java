@@ -1,18 +1,12 @@
 package ua.laposhko.hmt.web;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.UserCityDAO;
 import ua.laposhko.hmt.dao.UserDAO;
@@ -23,13 +17,18 @@ import ua.laposhko.hmt.service.usercity.IUserCityService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.WrongParamException;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Sergey Laposhko
  */
-@Path("/guide")
-public class GuideService {
+@Controller
+@RequestMapping("/guide")
+public class GuideWebService extends AbstractWebService {
 
-    private static final Logger LOGGER = Logger.getLogger(GuideService.class);
+    private static final Logger LOGGER = Logger.getLogger(GuideWebService.class);
 
     private IUserService<User> userService;
     private IUserCityService userCityService;
@@ -44,16 +43,11 @@ public class GuideService {
         this.userService = userService;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/bycity")
-    @Produces("application/json")
-    public List<User> getGuideListByCity(@QueryParam("cityId") int cityId) {
+    @RequestMapping(value = "/bycity", method = RequestMethod.GET)
+    public @ResponseBody
+    List<User> getGuideListByCity(@RequestParam("cityId") long cityId) {
         LOGGER.debug("Prociding getGuideListByCity command with param "
                 + cityId);
-        DAOFactory factory = DAOFactory.getIntsatnce();
-        UserCityDAO userCityDAO = factory.getUserCityDAO();
-        UserDAO userDAO = factory.getUserDAO();
 
         List<UserCity> userCities = userCityService.findByCityId(cityId);
         List<User> users = new ArrayList<User>();
@@ -65,12 +59,9 @@ public class GuideService {
         return users;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/where")
-    @Produces("application/json")
-    public List<User> getGuideListByKey(@QueryParam("cityId") int cityId,
-                                        @QueryParam("key") String key) {
+    @RequestMapping(value = "/where", method = RequestMethod.GET)
+    public @ResponseBody List<User> getGuideListByKey(@RequestParam("cityId") long cityId,
+                                        @RequestParam("key") String key) {
         LOGGER.debug("Prociding getGuideListByCity command with param "
                 + cityId);
         List<User> usersInTheCityList = getGuideListByCity(cityId);
@@ -85,12 +76,9 @@ public class GuideService {
         return res;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byid")
-    @Produces("application/json")
-    public User getGuideById(@QueryParam("cityId") String cityId,
-                             @QueryParam("id") int id) {
+    @RequestMapping(value = "/byid", method = RequestMethod.GET)
+    public @ResponseBody User getGuideById(@RequestParam("cityId") String cityId,
+                             @RequestParam("id") long id) {
         LOGGER.debug("Prociding getGuideListByCity command with param "
                 + cityId);
         User user = userService.findById(id);
@@ -101,11 +89,8 @@ public class GuideService {
         return user;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/bysession")
-    @Produces("application/json")
-    public User getGuideBySession(@QueryParam("sessionId") String sessionId) {
+    @RequestMapping(value = "/bysession", method = RequestMethod.GET)
+    public @ResponseBody User getGuideBySession(@RequestParam("sessionId") String sessionId) {
         LOGGER.debug("Prociding getGuideBySession command with param "
                 + sessionId);
         SessionManager sessionManager = SessionManager.getInstance();

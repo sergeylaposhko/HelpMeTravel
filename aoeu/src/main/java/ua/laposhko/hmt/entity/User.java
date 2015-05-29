@@ -1,9 +1,13 @@
 package ua.laposhko.hmt.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko
@@ -19,11 +23,13 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "sex_id")
     private Sex sexId;
-    @JoinColumn(name = "city_id")
-    private City city;
-    @JoinColumn(name = "first_name")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
+
+    private List<City> cities;
+    @Column(name = "first_name")
     private String firstName;
-    @JoinColumn(name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
     private String login;
     private String photo;
@@ -34,18 +40,16 @@ public class User implements Serializable {
     /**
      * @param id
      * @param sexId
-     * @param city
      * @param firstName
      * @param lastName
      * @param login
      * @param photo
      */
-    public User(long id, Sex sexId, City city, String firstName,
+    public User(long id, Sex sexId, String firstName,
                 String lastName, String login, String photo, String aboutMe, String password) {
         super();
         this.id = id;
         this.sexId = sexId;
-        this.city = city;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -86,20 +90,6 @@ public class User implements Serializable {
      */
     public void setSex(Sex sexId) {
         this.sexId = sexId;
-    }
-
-    /**
-     * @return the city
-     */
-    public City getCity() {
-        return city;
-    }
-
-    /**
-     * @param city the city to set
-     */
-    public void setCity(City city) {
-        this.city = city;
     }
 
     /**
@@ -187,4 +177,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
 }

@@ -1,12 +1,11 @@
 package ua.laposhko.hmt.web.exception;
 
-import java.util.List;
+import ua.laposhko.hmt.web.exception.message.WrongParamMessage;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import ua.laposhko.hmt.web.exception.message.WrongParamMessage;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

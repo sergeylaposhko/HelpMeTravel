@@ -1,51 +1,29 @@
 package ua.laposhko.hmt.web;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-
-import javax.servlet.ServletContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
-import ua.laposhko.hmt.entity.Place;
-
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import org.apache.log4j.Logger;
+import ua.laposhko.hmt.entity.Place;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("/test")
 public class JSONService {
 
-    @Context
-    ServletContext context;
-
     Logger log = Logger.getLogger(JSONService.class);
 
 
-    @BadgerFish
     @GET
     @Path("/get")
     @Produces("application/json")
     public Map<String, String> getMovieInJSON() {
         File file = new File("");
         System.out.println("!!!" + file.getAbsolutePath());
-        System.out.println("!!!" + context.getRealPath(""));
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("key1", "value1");
@@ -53,7 +31,6 @@ public class JSONService {
         return map;
     }
 
-    @BadgerFish
     @GET
     @Path("/kitty")
     @Produces("application/json")
@@ -61,7 +38,6 @@ public class JSONService {
         return Response.status(Response.Status.ACCEPTED).entity("I love you!!! You are on my web server now!=)").build();
     }
 
-    @BadgerFish
     @GET
     @Path("/cook")
     @Produces("application/json")

@@ -16,7 +16,7 @@ public class GenericManagerImpl<T, D extends GenericHibernateDao<T>> implements
 
     @Transactional
     @Override
-    public T findById(int id) {
+    public T findById(long id) {
         return dao.findById(id);
     }
 

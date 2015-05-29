@@ -1,44 +1,38 @@
 package ua.laposhko.hmt.web;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Country;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.entity.UserCity;
 import ua.laposhko.hmt.service.city.ICityService;
 import ua.laposhko.hmt.service.country.ICountryService;
-import ua.laposhko.hmt.service.user.*;
+import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.service.usercity.IUserCityService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.AuthorException;
+
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author Sergey Laposhko
  */
 @Path("/city")
-@Component
-public class CityWebService extends AbstractService {
+@Controller
+@RequestMapping(value = "/city")
+public class CityWebService extends AbstractWebService {
 
     private static final Logger LOGGER = Logger.getLogger(CityWebService.class);
 
@@ -47,13 +41,10 @@ public class CityWebService extends AbstractService {
     private IUserService<User> userService;
     private ICountryService countryService;
 
-    private int id = new Random().nextInt();
-
     @Autowired
     public void setCountryService(ICountryService countryService) {
         this.countryService = countryService;
         LOGGER.debug("Setting country service to city web service" + countryService);
-        LOGGER.debug("Id : " + id);
     }
 
     @Autowired
@@ -73,13 +64,12 @@ public class CityWebService extends AbstractService {
         this.cityService = cityService;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/all")
-    @Produces("application/json")
-    public List<City> getAllCities(@QueryParam("from") String from,
-                                   @QueryParam("to") String to) {
-        LOGGER.debug("Prociding cityAll command. with id: " + id);
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<City> getAllCities(@RequestParam(value = "from", required = false) String from,
+                            @RequestParam(value = "to", required = false) String to) {
+        LOGGER.debug("Prociding cityAll command");
         LOGGER.debug("The country service is: " + countryService);
         List<City> cities = cityService.findAll();
         cities = filter(from, to, cities);
@@ -87,12 +77,10 @@ public class CityWebService extends AbstractService {
         return cities;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/where")
-    @Produces("application/json")
-    public List<City> getCityWhere(@QueryParam("name") String name,
-                                   @QueryParam("from") String from, @QueryParam("to") String to) {
+    @RequestMapping(value = "/where", method = RequestMethod.GET)
+    public @ResponseBody List<City> getCityWhere(@RequestParam(value = "name", required = true) String name,
+                                   @RequestParam(value = "from", required = false) String from,
+                                   @RequestParam(value = "to", required = false) String to) {
         LOGGER.debug("Prociding cityByNameID command. Params: " + name);
         List<City> cities = cityService.findCityByName(name);
 
@@ -106,11 +94,8 @@ public class CityWebService extends AbstractService {
         return cities;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byid")
-    @Produces("application/json")
-    public List<City> getCityByIdName(@QueryParam("id") int id) {
+    @RequestMapping(value = "/byid", method = RequestMethod.GET)
+    public @ResponseBody List<City> getCityByIdName(@RequestParam("id") long id) {
         LOGGER.debug("Prociding cityByID command. Params: " + id);
 
         City city = cityService.findById(id);
@@ -122,13 +107,10 @@ public class CityWebService extends AbstractService {
         return res;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byuser")
-    @Produces("application/json")
-    public List<City> getCityByUser(@QueryParam("userId") long userId) {
+    @RequestMapping(value = "/byuser", method = RequestMethod.GET)
+    public @ResponseBody List<City> getCityByUser(@RequestParam("userId") long userId) {
         LOGGER.debug("Prociding cityByUser command. Params: " + userId);
-        List<City> res = cityService.findByUser(userId);
+        List<City> res = userService.findById(userId).getCities();
 
         if (res == null || res.size() == 0) {
             LOGGER.warn("No cities were found for user : " + userId);
@@ -136,12 +118,9 @@ public class CityWebService extends AbstractService {
         return res;
     }
 
-    @BadgerFish
-    @POST
-    @Path("/addToUser")
-    @Produces("application/json")
-    public void addCityToUser(@FormParam("sessionId") String sessionId,
-                              @FormParam("cityId") int cityId) {
+    @RequestMapping(value = "/addToUser", method = RequestMethod.POST)
+    public void addCityToUser(@RequestParam("sessionId") String sessionId,
+                              @RequestParam("cityId") long cityId) {
         LOGGER.debug("AddCity to user command started with params: "
                 + sessionId + ", " + cityId);
 
@@ -165,16 +144,11 @@ public class CityWebService extends AbstractService {
         LOGGER.debug("UserCity is created");
     }
 
-    @BadgerFish
-    @POST
-    @Path("/add")
-    @Produces("application/json")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void addCity(@FormDataParam("sessionId") String sessionId,
-                        @FormDataParam("photo") InputStream uploadedInputStream,
-                        @FormDataParam("photo") FormDataContentDisposition fileDetail,
-                        @FormDataParam("name") String name,
-                        @FormDataParam("countryId") int countryId) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA)
+    public void addCity(@RequestParam(value = "sessionId") String sessionId,
+                        @RequestParam(value = "photo") MultipartFile fileDetail,
+                        @RequestParam(value = "name") String name,
+                        @RequestParam(value = "countryId") long countryId) throws IOException {
         LOGGER.debug("Prociding addCity command. Params: " + name + ", "
                 + sessionId + ", " + countryId);
 
@@ -192,7 +166,7 @@ public class CityWebService extends AbstractService {
 
         cityService.save(city);
 
-        String imageLoc = ImageSaver.saveCityImage(uploadedInputStream, city, fileDetail.getFileName());
+        String imageLoc = ImageSaver.saveCityImage(fileDetail.getInputStream(), city, fileDetail.getName());
 
         city.setPhoto(imageLoc);
         cityService.update(city);

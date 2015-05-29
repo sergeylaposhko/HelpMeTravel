@@ -1,20 +1,11 @@
 package ua.laposhko.hmt.web;
 
-import java.sql.Date;
-import java.util.Calendar;
-
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.laposhko.hmt.dao.AnswerDAO;
-import ua.laposhko.hmt.dao.DAOFactory;
-import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.laposhko.hmt.entity.Answer;
 import ua.laposhko.hmt.entity.Question;
 import ua.laposhko.hmt.entity.User;
@@ -23,19 +14,22 @@ import ua.laposhko.hmt.service.question.IQuestionService;
 import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.AuthorException;
-import ua.laposhko.hmt.web.exception.WrongParamException;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * @author Sergey Laposhko
  */
-@Path("/answer")
-public class AnswerService {
+@Controller
+@RequestMapping(value = "/answer")
+public class AnswerWebService extends AbstractWebService {
 
     private IUserService<User> userService;
     private IAnswerService answerService;
     private IQuestionService questionService;
 
-    private static final Logger LOGGER = Logger.getLogger(AnswerService.class);
+    private static final Logger LOGGER = Logger.getLogger(AnswerWebService.class);
 
     @Autowired
     public void setQuestionService(IQuestionService questionService) {
@@ -52,13 +46,10 @@ public class AnswerService {
         this.answerService = answerService;
     }
 
-    @BadgerFish
-    @POST
-    @Path("/add")
-    @Produces("application/json")
-    public void addAnswer(@FormParam("sessionId") String sessionId,
-                          @FormParam("questionId") int questionId,
-                          @FormParam("text") String text) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public void addAnswer(@RequestParam(value = "sessionId") String sessionId,
+                          @RequestParam(value = "questionId") long questionId,
+                          @RequestParam(value = "text") String text) {
         LOGGER.debug("Prociding add answer command with param " + sessionId
                 + ", " + questionId);
         if (sessionId == null) {

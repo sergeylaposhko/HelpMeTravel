@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Sergey on 27.05.2015.
  */
 public interface IPlaceService extends GenericManager<Place> {
-    List<Place> findByCityId(int cityId);
+    List<Place> findByCityId(long cityId);
 }

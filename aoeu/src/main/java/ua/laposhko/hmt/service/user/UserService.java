@@ -22,7 +22,7 @@ public class UserService extends GenericManagerImpl<User, UserDao> implements IU
     private static final Logger logger = Logger.getLogger(UserService.class);
 
     public UserService(){
-        logger.debug("UserService is created...");
+        logger.debug("UserWebService is created...");
     }
 
     @Autowired

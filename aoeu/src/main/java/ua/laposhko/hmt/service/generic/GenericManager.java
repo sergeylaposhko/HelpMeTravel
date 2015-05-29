@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface GenericManager<T> {
 
-    public T findById(int id);
+    public T findById(long id);
 
     public List<T> findAll();
 

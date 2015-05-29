@@ -1,10 +1,10 @@
 package ua.laposhko.hmt.web.exception;
 
+import ua.laposhko.hmt.web.exception.message.SympleErrorMessage;
+
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import ua.laposhko.hmt.web.exception.message.SympleErrorMessage;
 
 /**
  * @author Sergey Laposhko

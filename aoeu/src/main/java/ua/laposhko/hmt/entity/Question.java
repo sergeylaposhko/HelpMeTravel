@@ -18,8 +18,10 @@ public class Question implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    @Column(name = "city_id")
+    @ManyToOne
+    @JoinColumn(name = "city_id")
     private City cityId;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
     private String header;

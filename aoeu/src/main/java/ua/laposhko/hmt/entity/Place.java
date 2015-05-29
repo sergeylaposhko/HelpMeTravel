@@ -12,8 +12,10 @@ public class Place {
     @Id
     @GeneratedValue
     private long id;
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     private String name;

@@ -26,12 +26,12 @@ public class CityDao extends GenericHibernateDaoImpl<City> implements ICityDao<C
 
     @Override
     public List<City> findByUser(long userId) {
-        return getCurrentSession().createQuery("from City where user.id = ?").setLong(0, userId).list();
+        return getCurrentSession().createQuery("from City where name like ?").setLong(0, userId).list();
     }
 
     @Override
     public List<City> findCityByName(String name) {
-        return getCurrentSession().createQuery("from City where user.name = ?").setString(0, name).list();
+        return getCurrentSession().createQuery("from City where name like ?").setString(0, name).list();
     }
 
 }

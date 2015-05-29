@@ -3,15 +3,10 @@ package ua.laposhko.hmt.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
-import ua.laposhko.hmt.entity.City;
-import ua.laposhko.hmt.web.exception.WrongParamException;
-
 /**
  * @author Sergey Laposhko
  */
-public abstract class AbstractService {
+public abstract class AbstractWebService {
 
     protected <T> List<T> filter(String start, String end, List<T> list) {
         if (start != null && end != null && list != null) {

@@ -1,24 +1,15 @@
 package ua.laposhko.hmt.web;
 
-import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.PlaceDAO;
-import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Place;
 import ua.laposhko.hmt.entity.User;
@@ -27,16 +18,20 @@ import ua.laposhko.hmt.service.place.IPlaceService;
 import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.AuthorException;
-import ua.laposhko.hmt.web.exception.WrongParamException;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko
  */
 @Path("/place")
-public class PlaceSevice {
+@Controller
+@RequestMapping("/place")
+public class PlaceWebService extends AbstractWebService {
 
     private IUserService<User> userService;
     private ICityService<City> cityService;
@@ -57,25 +52,20 @@ public class PlaceSevice {
         this.userService = userService;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(PlaceSevice.class);
+    private static final Logger LOGGER = Logger.getLogger(PlaceWebService.class);
 
-    @BadgerFish
-    @GET
-    @Path("/bycity")
-    @Produces("application/json")
-    public List<Place> getPlaceByCity(@QueryParam("cityId") int cityId) {
+    @RequestMapping(value = "/bycity", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Place> getPlaceByCity(@RequestParam("cityId") long cityId) {
         LOGGER.debug("Prociding getPlacesByCity command with param " + cityId);
         List<Place> places = placeService.findByCityId(cityId);
         LOGGER.debug("Places count: " + places.size());
         return places;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/where")
-    @Produces("application/json")
-    public List<Place> getPlaceByKey(@QueryParam("cityId") int cityId,
-                                     @QueryParam("key") String key) {
+    @RequestMapping(value = "/where", method = RequestMethod.GET)
+    public @ResponseBody List<Place> getPlaceByKey(@RequestParam("cityId") long cityId,
+                                     @RequestParam("key") String key) {
         LOGGER.debug("Prociding getPlaceByKey command with param " + cityId
                 + ", " + key);
         List<Place> places = placeService.findByCityId(cityId);
@@ -92,11 +82,8 @@ public class PlaceSevice {
         return res;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byid")
-    @Produces("application/json")
-    public Place getPlaceById(@QueryParam("id") int id) {
+    @RequestMapping(value = "/byid", method = RequestMethod.GET)
+    public @ResponseBody Place getPlaceById(@RequestParam("id") long id) {
         LOGGER.debug("Prociding getPlacesById command with param " + id);
         Place place = placeService.findById(id);
 
@@ -106,11 +93,8 @@ public class PlaceSevice {
         return place;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byuser")
-    @Produces("application/json")
-    public List<Place> getPlaceByUser(@QueryParam("sessionId") String sessionId) {
+    @RequestMapping(value = "/byuser", method = RequestMethod.GET)
+    public @ResponseBody List<Place> getPlaceByUser(@RequestParam("sessionId") String sessionId) {
         LOGGER.debug("Prociding getPlaceByUser command with param " + sessionId);
         if (sessionId == null) {
             throw new AuthorException();
@@ -134,16 +118,12 @@ public class PlaceSevice {
         return res;
     }
 
-    @BadgerFish
-    @POST
-    @Path("/add")
-    @Produces("application/json")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void addPlace(@FormDataParam("sessionId") String sessionId,
-                         @FormDataParam("photo") InputStream uploadedInputStream,
-                         @FormDataParam("photo") FormDataContentDisposition fileDetail,
-                         @FormDataParam("cityId") int cityId, @FormDataParam("name") String name,
-                         @FormDataParam("description") String description) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA)
+    public void addPlace(@RequestParam("sessionId") String sessionId,
+                         @RequestParam("photo") MultipartFile photoFile,
+                         @RequestParam("cityId") long cityId,
+                         @RequestParam("name") String name,
+                         @RequestParam("description") String description) throws IOException {
         LOGGER.debug("Prociding addPlace command with param " + sessionId
                 + ", " + cityId + ", " + name + ", ");
         if (sessionId == null) {
@@ -167,9 +147,9 @@ public class PlaceSevice {
 
         placeService.save(place);
 
-        if (fileDetail.getFileName() == null || fileDetail.getFileName().isEmpty())
+        if (photoFile == null || photoFile.getName() == null)
             return;
-        String imageLoc = ImageSaver.savePlaceImage(uploadedInputStream, place, fileDetail.getFileName());
+        String imageLoc = ImageSaver.savePlaceImage(photoFile.getInputStream(), place, photoFile.getName());
         place.setPhoto(imageLoc);
         placeService.update(place);
     }

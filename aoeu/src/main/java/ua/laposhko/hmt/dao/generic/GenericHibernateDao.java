@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GenericHibernateDao<T> {
 
-    public T findById(int id);
+    public T findById(long id);
 
     public List<T> findAll();
 

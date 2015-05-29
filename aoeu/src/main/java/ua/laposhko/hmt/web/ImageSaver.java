@@ -1,14 +1,13 @@
 package ua.laposhko.hmt.web;
 
-import java.io.File;
-import java.io.InputStream;
-
 import org.apache.log4j.Logger;
-
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Place;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.filesystem.FileSaver;
+
+import java.io.File;
+import java.io.InputStream;
 
 // TODO: Auto-generated Javadoc
 
@@ -74,9 +73,9 @@ public class ImageSaver {
     /**
      * Save city image.
      *
-     * @param uploadedInputStream the uploaded input stream
-     * @param city                the city
-     * @param fileName            the file name
+     * @param inputStream the uploaded input stream
+     * @param city        the city
+     * @param fileName    the file name
      * @return the string
      */
     public static String saveCityImage(InputStream inputStream,

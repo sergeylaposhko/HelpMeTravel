@@ -1,14 +1,12 @@
 package ua.laposhko.hmt.web.listener;
 
-import java.io.File;
+import org.apache.log4j.Logger;
+import ua.laposhko.hmt.web.ImageSaver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.apache.log4j.Logger;
-
-import ua.laposhko.hmt.web.ImageSaver;
+import java.io.File;
 
 /**
  * @author Sergey Laposhko

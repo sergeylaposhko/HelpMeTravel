@@ -13,7 +13,9 @@ public class UserCity {
     @GeneratedValue
     private long id;
     @JoinColumn(name = "user_id")
+    @ManyToOne
     private User userId;
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City cityId;
 

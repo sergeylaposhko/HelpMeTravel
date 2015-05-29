@@ -26,6 +26,9 @@ public class Country implements Serializable {
         this.name = name;
     }
 
+    public Country() {
+    }
+
     public long getId() {
         return id;
     }

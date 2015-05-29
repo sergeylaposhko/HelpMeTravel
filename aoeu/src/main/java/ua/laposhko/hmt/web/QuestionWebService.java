@@ -1,26 +1,14 @@
 package ua.laposhko.hmt.web;
 
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-
 import org.apache.log4j.Logger;
-import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.QuestionDAO;
-import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Answer;
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Question;
@@ -33,11 +21,15 @@ import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.AuthorException;
 import ua.laposhko.hmt.web.exception.WrongParamException;
 
+import java.sql.Date;
+import java.util.*;
+
 /**
  * @author Sergey Laposhko
  */
-@Path("/question")
-public class QuestionService extends AbstractService {
+@Controller
+@RequestMapping("/question")
+public class QuestionWebService extends AbstractWebService {
 
     private IQuestionService questionService;
     private IAnswerService answerService;
@@ -65,13 +57,11 @@ public class QuestionService extends AbstractService {
     }
 
     private static final Logger LOGGER = Logger
-            .getLogger(QuestionService.class);
+            .getLogger(QuestionWebService.class);
 
-    @BadgerFish
-    @GET
-    @Path("/bycity")
-    @Produces("application/json")
-    public List<Question> getQuestionByCity(@QueryParam("cityId") String cityId) {
+    @RequestMapping(value = "/bycity", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Question> getQuestionByCity(@RequestParam("cityId") String cityId) {
         LOGGER.debug("Prociding getQuestionByCity command with param " + cityId);
         long cityidParsed = 0;
         try {
@@ -88,13 +78,10 @@ public class QuestionService extends AbstractService {
         return questions;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/where")
-    @Produces("application/json")
-    public List<Question> getQuestionByParams(
-            @QueryParam("cityId") String cityId,
-            @QueryParam("key") String keyWord) {
+    @RequestMapping(value = "/where", method = RequestMethod.GET)
+    public @ResponseBody List<Question> getQuestionByParams(
+            @RequestParam("cityId") String cityId,
+            @RequestParam("key") String keyWord) {
         LOGGER.debug("Prociding getQuestionByParams command with param "
                 + cityId + ", " + keyWord);
         long cityidParsed = 0;
@@ -124,12 +111,9 @@ public class QuestionService extends AbstractService {
         return res;
     }
 
-    @BadgerFish
-    @GET
-    @Path("/byid")
-    @Produces("application/json")
-    public Map<String, Object> getQuestionById(
-            @QueryParam("id") int id) {
+    @RequestMapping(value = "/byid", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> getQuestionById(
+            @RequestParam("id") int id) {
         LOGGER.debug("Prociding getQuestionById command with param " + id);
 
         Map<String, Object> resMap = new HashMap<String, Object>();
@@ -144,13 +128,10 @@ public class QuestionService extends AbstractService {
         return resMap;
     }
 
-    @BadgerFish
-    @POST
-    @Path("/add")
-    @Produces("application/json")
-    public void addQuestion(@FormParam("cityId") int cityId,
-                            @FormParam("sessionId") String sessionId,
-                            @FormParam("header") String header, @FormParam("text") String text) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public @ResponseBody void addQuestion(@RequestParam("cityId") long cityId,
+                            @RequestParam("sessionId") String sessionId,
+                            @RequestParam("header") String header, @RequestParam("text") String text) {
         LOGGER.debug("Prociding addQuestion command with param " + cityId
                 + ", " + sessionId + ", ...");
 
