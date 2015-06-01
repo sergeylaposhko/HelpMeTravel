@@ -1,5 +1,5 @@
 # TravelQuestions
-HelpMeTravel is a web application.
+TravelQuestions is a web application.
 
 <br /> aoeu - is the folder of the backend application.
 <br /> front-end - is the filder for angularjs project that is the clien for the backend.
