@@ -7,13 +7,13 @@
     <display-name>Restful Web Application</display-name>
 
     <!--<servlet>-->
-        <!--<servlet-name>jerseyspring</servlet-name>-->
-        <!--<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>-->
-        <!--<load-on-startup>1</load-on-startup>-->
+    <!--<servlet-name>jerseyspring</servlet-name>-->
+    <!--<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>-->
+    <!--<load-on-startup>1</load-on-startup>-->
     <!--</servlet>-->
     <!--<servlet-mapping>-->
-        <!--<servlet-name>jerseyspring</servlet-name>-->
-        <!--<url-pattern>/rest/*</url-pattern>-->
+    <!--<servlet-name>jerseyspring</servlet-name>-->
+    <!--<url-pattern>/rest/*</url-pattern>-->
     <!--</servlet-mapping>-->
 
     <servlet>

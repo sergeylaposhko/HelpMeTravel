@@ -7,8 +7,8 @@
             <generator class="increment"/>
         </id>
 
-        <property column="user_id" name="userId" type="java.lang.Long"/>
-        <property column="city_id" name="cityId" type="java.lang.Long"/>
+        <property column="user_id" name="getUser" type="java.lang.Long"/>
+        <property column="city_id" name="getCity" type="java.lang.Long"/>
         <property column="text" name="text" type="java.lang.String"/>
         <property column="header" name="header" type="java.lang.String"/>
         <property column="date" name="date" type="java.sql.Date"/>
