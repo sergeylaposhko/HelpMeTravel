@@ -1,6 +1,7 @@
 package ua.laposhko.hmt.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -23,9 +24,13 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "sex_id")
     private Sex sexId;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private List<City> cities;
     @Column(name = "first_name")
     private String firstName;
@@ -166,6 +171,7 @@ public class User implements Serializable {
      * @return the password
      */
     @XmlTransient
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -184,4 +190,17 @@ public class User implements Serializable {
     public void setCities(List<City> cities) {
         this.cities = cities;
     }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public void setSexId(Sex sexId) {
+        this.sexId = sexId;
+    }
+
 }

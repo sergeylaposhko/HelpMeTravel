@@ -1,9 +1,9 @@
 package ua.laposhko.hmt.dao;
 
-import java.util.List;
-
 import ua.laposhko.hmt.entity.Sex;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

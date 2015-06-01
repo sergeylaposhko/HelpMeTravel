@@ -1,5 +1,7 @@
 package ua.laposhko.hmt.web.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.laposhko.hmt.web.exception.message.WrongParamMessage;
 
 import javax.ws.rs.WebApplicationException;
@@ -10,6 +12,7 @@ import java.util.List;
 /**
  * @author Sergey Laposhko
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class WrongParamException extends WebApplicationException {
 
     /**

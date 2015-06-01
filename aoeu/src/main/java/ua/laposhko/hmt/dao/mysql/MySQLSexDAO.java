@@ -1,10 +1,10 @@
 package ua.laposhko.hmt.dao.mysql;
 
-import java.util.List;
-
 import ua.laposhko.hmt.dao.SexDAO;
 import ua.laposhko.hmt.entity.Sex;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

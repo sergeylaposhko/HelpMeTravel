@@ -1,5 +1,7 @@
 package ua.laposhko.hmt.service.generic;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 import ua.laposhko.hmt.dao.generic.GenericHibernateDao;
 

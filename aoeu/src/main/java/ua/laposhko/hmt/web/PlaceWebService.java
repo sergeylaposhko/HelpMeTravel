@@ -55,7 +55,8 @@ public class PlaceWebService extends AbstractWebService {
     private static final Logger LOGGER = Logger.getLogger(PlaceWebService.class);
 
     @RequestMapping(value = "/bycity", method = RequestMethod.GET)
-    public @ResponseBody
+    public
+    @ResponseBody
     List<Place> getPlaceByCity(@RequestParam("cityId") long cityId) {
         LOGGER.debug("Prociding getPlacesByCity command with param " + cityId);
         List<Place> places = placeService.findByCityId(cityId);
@@ -64,8 +65,10 @@ public class PlaceWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/where", method = RequestMethod.GET)
-    public @ResponseBody List<Place> getPlaceByKey(@RequestParam("cityId") long cityId,
-                                     @RequestParam("key") String key) {
+    public
+    @ResponseBody
+    List<Place> getPlaceByKey(@RequestParam("cityId") long cityId,
+                              @RequestParam("key") String key) {
         LOGGER.debug("Prociding getPlaceByKey command with param " + cityId
                 + ", " + key);
         List<Place> places = placeService.findByCityId(cityId);
@@ -83,7 +86,9 @@ public class PlaceWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/byid", method = RequestMethod.GET)
-    public @ResponseBody Place getPlaceById(@RequestParam("id") long id) {
+    public
+    @ResponseBody
+    Place getPlaceById(@RequestParam("id") long id) {
         LOGGER.debug("Prociding getPlacesById command with param " + id);
         Place place = placeService.findById(id);
 
@@ -94,13 +99,15 @@ public class PlaceWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/byuser", method = RequestMethod.GET)
-    public @ResponseBody List<Place> getPlaceByUser(@RequestParam("sessionId") String sessionId) {
+    public
+    @ResponseBody
+    List<Place> getPlaceByUser(@RequestParam("sessionId") String sessionId) {
         LOGGER.debug("Prociding getPlaceByUser command with param " + sessionId);
         if (sessionId == null) {
             throw new AuthorException();
         }
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             throw new AuthorException();
         }
         Long userId = sessionManager.getUserId(sessionId);
@@ -130,7 +137,7 @@ public class PlaceWebService extends AbstractWebService {
             throw new AuthorException();
         }
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             throw new AuthorException();
         }
         Long userId = sessionManager.getUserId(sessionId);

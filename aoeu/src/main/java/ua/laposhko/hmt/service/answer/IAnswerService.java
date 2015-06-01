@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Sergey on 27.05.2015.
  */
 public interface IAnswerService extends GenericManager<Answer>{
-    List<Answer> findByQuestionId(int id);
+    List<Answer> findByQuestionId(long id);
 }

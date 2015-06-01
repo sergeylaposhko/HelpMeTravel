@@ -1,10 +1,9 @@
 package ua.laposhko.hmt.session.redis;
 
-import java.util.Random;
-
 import redis.clients.jedis.Jedis;
-import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.session.SessionManager;
+
+import java.util.Random;
 
 /**
  * @author Sergey Laposhko
@@ -17,10 +16,10 @@ public class RedisSessionManager extends SessionManager {
      * (non-Javadoc)
      * 
      * @see
-     * ua.laposhko.hmt.session.SessionManager#sessionExsists(java.lang.String)
+     * ua.laposhko.hmt.session.SessionManager#sessionExists(java.lang.String)
      */
     @Override
-    public boolean sessionExsists(String sessionCode) {
+    public boolean sessionExists(String sessionCode) {
         Jedis jedis = new Jedis(REDIS);
         boolean res = jedis.exists(sessionCode);
         jedis.close();
@@ -34,7 +33,7 @@ public class RedisSessionManager extends SessionManager {
      * ua.laposhko.hmt.session.SessionManager#createSession(java.lang.String)
      */
     @Override
-    public String createSession(String userId) {
+    public String createSession(Long userId) {
         Random random = new Random();
         String firstPartString = null;
         firstPartString = String.valueOf(userId.hashCode());
@@ -45,7 +44,7 @@ public class RedisSessionManager extends SessionManager {
             System.out.println(firstPartString);
             System.out.println(key);
         }
-        jedis.set(key, userId);
+        jedis.set(key, String.valueOf(userId));
         jedis.close();
         return key;
     }
@@ -70,7 +69,7 @@ public class RedisSessionManager extends SessionManager {
      */
     @Override
     public Long getUserId(String sessionId) {
-        if (!sessionExsists(sessionId)) {
+        if (!sessionExists(sessionId)) {
             return null;
         }
         Jedis jedis = new Jedis(REDIS);

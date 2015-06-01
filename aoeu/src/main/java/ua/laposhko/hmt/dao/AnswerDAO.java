@@ -1,10 +1,10 @@
 package ua.laposhko.hmt.dao;
 
-import java.util.List;
-
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Answer;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 

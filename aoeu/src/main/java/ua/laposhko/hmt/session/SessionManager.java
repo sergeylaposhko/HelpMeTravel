@@ -1,6 +1,5 @@
 package ua.laposhko.hmt.session;
 
-import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.session.redis.RedisSessionManager;
 
 /**
@@ -16,7 +15,7 @@ public abstract class SessionManager {
      * @param sessionCode the session code
      * @return true, if successful
      */
-    public abstract boolean sessionExsists(String sessionCode);
+    public abstract boolean sessionExists(String sessionCode);
 
     /**
      * Creates the session by the userId param.
@@ -24,7 +23,7 @@ public abstract class SessionManager {
      * @param userId the user id
      * @return the key for the new session
      */
-    public abstract String createSession(String userId);
+    public abstract String createSession(Long userId);
 
     /**
      * Closes session by its key.
@@ -44,7 +43,7 @@ public abstract class SessionManager {
 
     public synchronized static final SessionManager getInstance() {
         if (instance == null) {
-            instance = new RedisSessionManager();
+            instance = new AlwaysTrueSessionManager(); //todo replace it with real instance.
         }
         return instance;
     }

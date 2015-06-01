@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.QuestionDAO;
-import ua.laposhko.hmt.entity.Answer;
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.Question;
 import ua.laposhko.hmt.entity.User;
@@ -59,8 +58,19 @@ public class QuestionWebService extends AbstractWebService {
     private static final Logger LOGGER = Logger
             .getLogger(QuestionWebService.class);
 
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<Question> getAllQuestions() {
+        LOGGER.debug("Returning all questions...");
+        List<Question> all = questionService.findAll();
+        LOGGER.debug("Total question count is " + all.size());
+        return all;
+    }
+
     @RequestMapping(value = "/bycity", method = RequestMethod.GET)
-    public @ResponseBody
+    public
+    @ResponseBody
     List<Question> getQuestionByCity(@RequestParam("cityId") String cityId) {
         LOGGER.debug("Prociding getQuestionByCity command with param " + cityId);
         long cityidParsed = 0;
@@ -78,28 +88,39 @@ public class QuestionWebService extends AbstractWebService {
         return questions;
     }
 
+    @RequestMapping(value = "/byuser", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<Question> getQuestionByUser(@RequestParam("userId") long userId) {
+        LOGGER.debug("Prociding getQuestionByUser command with param " + userId);
+        List<Question> questions = questionService.findByUserId(userId);
+        LOGGER.debug("Question count: " + questions.size());
+        return questions;
+    }
+
     @RequestMapping(value = "/where", method = RequestMethod.GET)
-    public @ResponseBody List<Question> getQuestionByParams(
-            @RequestParam("cityId") String cityId,
+    public
+    @ResponseBody
+    List<Question> getQuestionByParams(
+            @RequestParam(value = "cityId", required = false) Long cityId,
             @RequestParam("key") String keyWord) {
         LOGGER.debug("Prociding getQuestionByParams command with param "
                 + cityId + ", " + keyWord);
-        long cityidParsed = 0;
-        try {
-            cityidParsed = Long.valueOf(cityId);
-        } catch (NumberFormatException e) {
-            LOGGER.error("Wrong parameter " + cityId);
-            throw new WrongParamException("cityId");
+        List<Question> questions = questionService.findAll();
+
+        if(cityId != null){
+            LOGGER.debug("City id isn't null. Filtering...");
+            for (int i = 0; i < questions.size(); i++) {
+                if(questions.get(i).getCity().getId() != cityId){
+                    questions.remove(i);
+                    i--;
+                }
+            }
         }
 
-        DAOFactory factory = DAOFactory.getIntsatnce();
-        QuestionDAO questionDAO = factory.getQuestionDAO();
-        List<Question> questions = questionDAO
-                .findQuestionsByCity(cityidParsed);
-        List<Question> res = new LinkedList<Question>();
+        List<Question> res = new LinkedList<>();
 
-        for (int i = 0; i < questions.size(); i++) {
-            Question curQuestion = questions.get(i);
+        for (Question curQuestion : questions) {
             if (curQuestion.getHeader().contains(keyWord)) {
                 res.add(0, curQuestion);
             } else if (curQuestion.getText().contains(keyWord)) {
@@ -112,31 +133,30 @@ public class QuestionWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/byid", method = RequestMethod.GET)
-    public @ResponseBody Map<String, Object> getQuestionById(
-            @RequestParam("id") int id) {
+    public
+    @ResponseBody
+    Question getQuestionById(
+            @RequestParam("id") long id) {
         LOGGER.debug("Prociding getQuestionById command with param " + id);
 
-        Map<String, Object> resMap = new HashMap<String, Object>();
         Question question = questionService.findById(id);
         if (question == null) {
             throw new WrongParamException("id");
         }
-        resMap.put("question", question);
-        List<Answer> answers = answerService.findByQuestionId(id);
-        resMap.put("answers", answers);
-        LOGGER.debug("Elements count: " + answers.size());
-        return resMap;
+        return question;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addQuestion(@RequestParam("cityId") long cityId,
-                            @RequestParam("sessionId") String sessionId,
-                            @RequestParam("header") String header, @RequestParam("text") String text) {
+    public
+    @ResponseBody
+    void addQuestion(@RequestParam("cityId") long cityId,
+                     @RequestParam("sessionId") String sessionId,
+                     @RequestParam("header") String header, @RequestParam("text") String text) {
         LOGGER.debug("Prociding addQuestion command with param " + cityId
                 + ", " + sessionId + ", ...");
 
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             throw new AuthorException();
         }
         Long userId = sessionManager.getUserId(sessionId);

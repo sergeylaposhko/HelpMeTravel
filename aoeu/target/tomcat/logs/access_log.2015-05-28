@@ -1,4 +1,0 @@
-0:0:0:0:0:0:0:1 - - [28/May/2015:00:01:23 +0300] "GET /rest/city/all HTTP/1.1" 500 3330 http-bio-8080-exec-1 136
-0:0:0:0:0:0:0:1 - - [28/May/2015:00:04:41 +0300] "GET /rest/city/all HTTP/1.1" 500 3330 http-bio-8080-exec-1 261
-0:0:0:0:0:0:0:1 - - [28/May/2015:00:09:57 +0300] "GET /rest/city/all HTTP/1.1" 500 3330 http-bio-8080-exec-2 104
-0:0:0:0:0:0:0:1 - - [28/May/2015:00:16:55 +0300] "GET /rest/city/all HTTP/1.1" 500 3330 http-bio-8080-exec-1 150

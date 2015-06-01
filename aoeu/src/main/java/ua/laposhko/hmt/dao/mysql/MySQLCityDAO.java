@@ -1,15 +1,14 @@
 package ua.laposhko.hmt.dao.mysql;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
-
 import ua.laposhko.hmt.dao.CityDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.City;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

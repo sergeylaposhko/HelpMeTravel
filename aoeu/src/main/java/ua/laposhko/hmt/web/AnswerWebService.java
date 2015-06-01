@@ -2,10 +2,9 @@ package ua.laposhko.hmt.web;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.laposhko.hmt.entity.Answer;
 import ua.laposhko.hmt.entity.Question;
 import ua.laposhko.hmt.entity.User;
@@ -47,16 +46,18 @@ public class AnswerWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addAnswer(@RequestParam(value = "sessionId") String sessionId,
-                          @RequestParam(value = "questionId") long questionId,
-                          @RequestParam(value = "text") String text) {
+    public
+    @ResponseBody
+    Question addAnswer(@RequestParam(value = "sessionId") String sessionId,
+                     @RequestParam(value = "questionId") long questionId,
+                     @RequestParam(value = "text") String text) {
         LOGGER.debug("Prociding add answer command with param " + sessionId
                 + ", " + questionId);
         if (sessionId == null) {
             throw new AuthorException();
         }
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             throw new AuthorException();
         }
         Long userId = sessionManager.getUserId(sessionId);
@@ -71,6 +72,8 @@ public class AnswerWebService extends AbstractWebService {
         answer.setUser(user);
 
         answerService.save(answer);
+
+        return questionService.findById(questionId);
     }
 
 }

@@ -1,11 +1,11 @@
 package ua.laposhko.hmt.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.Set;
 
 /**
  * @author Sergey Laposhko
@@ -20,20 +20,28 @@ public class Question implements Serializable {
     private long id;
     @ManyToOne
     @JoinColumn(name = "city_id")
-    private City cityId;
+    private City city;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
+    private Set<Answer> answers;
+
     private String header;
     private String text;
     private Date date;
 
-    public Question(long id, City placeId, User userId, String header,
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    private Set<QuestionVote> votes;
+
+    public Question(long id, City placeId, User user, String header,
                     String text, Date date) {
         super();
         this.id = id;
-        this.cityId = placeId;
-        this.userId = userId;
+        this.city = placeId;
+        this.user = user;
         this.header = header;
         this.text = text;
         this.date = date;
@@ -64,30 +72,23 @@ public class Question implements Serializable {
      * @return the cityId
      */
     @XmlElement
-    public City getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
     /**
-     * @param cityId the cityId to set
+     * @param city the cityId to set
      */
-    public void setCity(City placeId) {
-        this.cityId = placeId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     /**
      * @return the userId
      */
     @XmlElement
-    public User getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId the userId to set
-     */
-    public void setUser(User userId) {
-        this.userId = userId;
+    public User getUser() {
+        return user;
     }
 
     /**
@@ -135,4 +136,23 @@ public class Question implements Serializable {
         this.header = header;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<QuestionVote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<QuestionVote> votes) {
+        this.votes = votes;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
 }

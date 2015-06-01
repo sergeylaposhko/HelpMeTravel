@@ -1,8 +1,5 @@
 package ua.laposhko.hmt.dao.mysql;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -10,20 +7,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.exception.ConstraintViolationException;
-
 import ua.laposhko.hmt.config.HibernateConfig;
-import ua.laposhko.hmt.dao.AnswerDAO;
-import ua.laposhko.hmt.dao.CityDAO;
-import ua.laposhko.hmt.dao.CommentDAO;
-import ua.laposhko.hmt.dao.CountryDAO;
-import ua.laposhko.hmt.dao.DAOFactory;
-import ua.laposhko.hmt.dao.PlaceDAO;
-import ua.laposhko.hmt.dao.QuestionDAO;
-import ua.laposhko.hmt.dao.SexDAO;
-import ua.laposhko.hmt.dao.UserCityDAO;
-import ua.laposhko.hmt.dao.UserDAO;
+import ua.laposhko.hmt.dao.*;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

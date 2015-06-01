@@ -1,13 +1,14 @@
 package ua.laposhko.hmt.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Sergey Laposhko
  */
 @Entity
 @Table(name = "place")
-public class Place {
+public class Place implements Serializable {
 
     @Id
     @GeneratedValue

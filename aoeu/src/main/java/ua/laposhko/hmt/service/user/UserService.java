@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.laposhko.hmt.dao.generic.user.IUserDAO;
 import ua.laposhko.hmt.dao.generic.user.UserDao;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.service.generic.GenericManagerImpl;
@@ -21,8 +22,10 @@ public class UserService extends GenericManagerImpl<User, UserDao> implements IU
 
     private static final Logger logger = Logger.getLogger(UserService.class);
 
-    public UserService(){
+    @Autowired
+    public UserService(IUserDAO userDAO){
         logger.debug("UserWebService is created...");
+        super.setDao(userDAO);
     }
 
     @Autowired

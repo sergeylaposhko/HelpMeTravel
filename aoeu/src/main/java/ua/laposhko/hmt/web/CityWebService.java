@@ -13,7 +13,7 @@ import ua.laposhko.hmt.entity.Country;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.entity.UserCity;
 import ua.laposhko.hmt.service.city.ICityService;
-import ua.laposhko.hmt.service.country.ICountryService;
+import ua.laposhko.hmt.service.generic.GenericManager;
 import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.service.usercity.IUserCityService;
 import ua.laposhko.hmt.session.SessionManager;
@@ -24,7 +24,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Sergey Laposhko
@@ -39,10 +38,10 @@ public class CityWebService extends AbstractWebService {
     private ICityService<City> cityService;
     private IUserCityService userCityService;
     private IUserService<User> userService;
-    private ICountryService countryService;
+    private GenericManager<Country> countryService;
 
     @Autowired
-    public void setCountryService(ICountryService countryService) {
+    public void setCountryService(GenericManager<Country> countryService) {
         this.countryService = countryService;
         LOGGER.debug("Setting country service to city web service" + countryService);
     }
@@ -78,9 +77,11 @@ public class CityWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/where", method = RequestMethod.GET)
-    public @ResponseBody List<City> getCityWhere(@RequestParam(value = "name", required = true) String name,
-                                   @RequestParam(value = "from", required = false) String from,
-                                   @RequestParam(value = "to", required = false) String to) {
+    public
+    @ResponseBody
+    List<City> getCityWhere(@RequestParam(value = "name", required = true) String name,
+                            @RequestParam(value = "from", required = false) String from,
+                            @RequestParam(value = "to", required = false) String to) {
         LOGGER.debug("Prociding cityByNameID command. Params: " + name);
         List<City> cities = cityService.findCityByName(name);
 
@@ -95,7 +96,9 @@ public class CityWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/byid", method = RequestMethod.GET)
-    public @ResponseBody List<City> getCityByIdName(@RequestParam("id") long id) {
+    public
+    @ResponseBody
+    List<City> getCityByIdName(@RequestParam("id") long id) {
         LOGGER.debug("Prociding cityByID command. Params: " + id);
 
         City city = cityService.findById(id);
@@ -108,7 +111,9 @@ public class CityWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/byuser", method = RequestMethod.GET)
-    public @ResponseBody List<City> getCityByUser(@RequestParam("userId") long userId) {
+    public
+    @ResponseBody
+    List<City> getCityByUser(@RequestParam("userId") long userId) {
         LOGGER.debug("Prociding cityByUser command. Params: " + userId);
         List<City> res = userService.findById(userId).getCities();
 
@@ -125,7 +130,7 @@ public class CityWebService extends AbstractWebService {
                 + sessionId + ", " + cityId);
 
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             LOGGER.warn("Trying to add city from not exsisting session " + sessionId);
             throw new AuthorException();
         }
@@ -153,7 +158,7 @@ public class CityWebService extends AbstractWebService {
                 + sessionId + ", " + countryId);
 
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             throw new AuthorException();
         }
 

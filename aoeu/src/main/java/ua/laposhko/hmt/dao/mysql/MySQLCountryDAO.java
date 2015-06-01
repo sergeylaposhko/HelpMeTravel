@@ -1,11 +1,11 @@
 package ua.laposhko.hmt.dao.mysql;
 
-import java.util.List;
-
 import ua.laposhko.hmt.dao.CountryDAO;
 import ua.laposhko.hmt.dao.exception.NoSuchEntityException;
 import ua.laposhko.hmt.entity.Country;
 import ua.laposhko.hmt.entity.User;
+
+import java.util.List;
 
 /**
  * @author Sergey Laposhko

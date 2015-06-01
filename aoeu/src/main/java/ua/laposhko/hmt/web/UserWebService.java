@@ -12,9 +12,11 @@ import ua.laposhko.hmt.dao.DAOFactory;
 import ua.laposhko.hmt.dao.SexDAO;
 import ua.laposhko.hmt.dao.UserDAO;
 import ua.laposhko.hmt.entity.City;
+import ua.laposhko.hmt.entity.Country;
 import ua.laposhko.hmt.entity.Sex;
 import ua.laposhko.hmt.entity.User;
 import ua.laposhko.hmt.service.city.ICityService;
+import ua.laposhko.hmt.service.generic.GenericManager;
 import ua.laposhko.hmt.service.user.IUserService;
 import ua.laposhko.hmt.session.SessionManager;
 import ua.laposhko.hmt.web.exception.WrongParamException;
@@ -46,6 +48,12 @@ public class UserWebService extends AbstractWebService {
 
     private IUserService<User> userService;
     private ICityService<City> cityService;
+    private GenericManager<Country> countryService;
+
+    @Autowired
+    public void setCountryService(GenericManager<Country> countryService) {
+        this.countryService = countryService;
+    }
 
     @Autowired
     public void setCityService(ICityService<City> cityService) {
@@ -60,17 +68,18 @@ public class UserWebService extends AbstractWebService {
     private static final Logger LOGGER = Logger.getLogger(UserWebService.class);
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA)
-    public @ResponseBody
+    public
+    @ResponseBody
     Response registerUser(@RequestParam("login") String login,
-                                 @RequestParam("firstName") String firstName,
-                                 @RequestParam("lastName") String lastName,
-                                 @RequestParam("sex") String sex,
-                                 @RequestParam("countryId") int cityId,
-                                 @RequestParam("photo") MultipartFile photoFile,
-                                 @RequestParam("aboutMe") String aboutMe,
-                                 @RequestParam("password") String password) throws IOException {
+                          @RequestParam("firstName") String firstName,
+                          @RequestParam("lastName") String lastName,
+                          @RequestParam("sex") String sex,
+                          @RequestParam("countryId") long countryId,
+                          @RequestParam("photo") MultipartFile photoFile,
+                          @RequestParam("aboutMe") String aboutMe,
+                          @RequestParam("password") String password) throws IOException {
         LOGGER.info("Start registerUser command with params " + login + ", "
-                + sex + ", " + cityId);
+                + sex + ", " + countryId);
         // hashing incoming password
         password = String.valueOf(password.hashCode());
 
@@ -91,10 +100,10 @@ public class UserWebService extends AbstractWebService {
             userSex = getSexFromString(sex, factory.getSexDAO());
         }
 
-        City city = cityService.findById(cityId);
+        Country country = countryService.findById(countryId);
 
         newUser.setAboutMe(aboutMe);
-        newUser.setCity(city);
+        newUser.setCountry(country);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setLogin(login);
@@ -114,13 +123,13 @@ public class UserWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody Map<String, String> login(@RequestParam("login") String login,
-                                     @RequestParam("password") String password) {
+    public
+    @ResponseBody
+    Map<String, String> login(@RequestParam("login") String login,
+                              @RequestParam("password") String password) {
         LOGGER.debug("Starting loginCommand for login: " + login + password);
         password = String.valueOf(password.hashCode());
-        DAOFactory factory = DAOFactory.getIntsatnce();
-        UserDAO userDAO = factory.getUserDAO();
-        User curUser = userDAO.findUserByLogin(login);
+        User curUser = userService.findByLogin(login);
         if (curUser == null) {
             LOGGER.error("There is no user with login: " + login);
             List<String> wrongParamList = new ArrayList<String>();
@@ -139,8 +148,7 @@ public class UserWebService extends AbstractWebService {
         }
 
         SessionManager sessionManager = SessionManager.getInstance();
-        String sessionId = sessionManager.createSession(String.valueOf(curUser
-                .getId()));
+        String sessionId = sessionManager.createSession(curUser.getId());
         Map<String, String> res = new HashMap<String, String>();
         res.put("sessionId", sessionId);
         LOGGER.debug("Session created with sessionId: " + sessionId);
@@ -148,11 +156,13 @@ public class UserWebService extends AbstractWebService {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public @ResponseBody Response logout(@FormParam("sessionId") String sessionId) {
+    public
+    @ResponseBody
+    Response logout(@FormParam("sessionId") String sessionId) {
         LOGGER.info("Start logout command withsessioinId: " + sessionId);
 
         SessionManager sessionManager = SessionManager.getInstance();
-        if (!sessionManager.sessionExsists(sessionId)) {
+        if (!sessionManager.sessionExists(sessionId)) {
             LOGGER.error("Cannot logout missing session " + sessionId);
             throw new WrongParamException("sessionId");
         }

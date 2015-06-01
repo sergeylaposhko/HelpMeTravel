@@ -30,7 +30,7 @@ public class City implements Serializable {
     @JoinTable(name = "user_city",
             joinColumns = {@JoinColumn(name = "city_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private List<User> users;
 
     public City() {
