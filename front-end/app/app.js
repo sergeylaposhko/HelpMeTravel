@@ -1,5 +1,6 @@
 angular.module('tqApp', [
 	'ngRoute',
+	'ngCookies',
 	'tqApp.resources'
 ])
 .config(['$routeProvider', '$sceDelegateProvider', function($routeProvider, $sceDelegateProvider) {
@@ -10,3 +11,5 @@ angular.module('tqApp', [
 		'https://www.youtube.com/**'
 	]);
 }]);
+
+angular.module('tqApp.resources', ['ngResource', 'tqApp.constants']);

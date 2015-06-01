@@ -1,8 +1,54 @@
 <div class="container">
-	
-	Here is question page.
-		{{testDate}}
-		From service: {{logined.logined}}
-		From factory: {{data.logined}}
-		<button ng-click="triger()">Triger</button>
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4 text-center">
+			<h2>Questions</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+			<input class="form-control" type="text" ng-model="searchQuestion.header" ng-model-options="{debounce: 300}" placeholder="Search">
+		</div>
+	</div>
+	<br><br>
+	<div class="row well" ng-repeat="question in filteredQuestions = (questions | filter: searchQuestion)">
+		<div class="col-sm-9">
+			<div>
+				<h3>
+				<a href="#/questionDetail/{{question.id}}">
+					{{::question.header}}
+				</a>
+				</h3>
+			</div>
+			<div>
+				{{question.text | limitTo: 100}}...
+			</div>
+			<div>
+				<a ng-href="#/user?userId={{question.user.id}}">
+					{{::question.user.firstName}} {{::question.user.lastName}}
+				</a>
+			</div>
+		</div>
+		<div class="col-sm-3 text-right">
+			<div class="row" ng-show="loginData.logined">
+				<button class="btn btn-sm" ng-click="voteUp(question.id)">
+				<i class="mdi-navigation-expand-less"></i>
+				</button>
+				<button class="btn btn-sm" ng-click="voteDown(question.id)">
+				<i class="mdi-navigation-expand-more"></i>
+				</button>
+			</div>
+			<div class="row">
+				<div class="col-sm- col-sm-offset-6">
+					<h4>Rate: {{question.votes.length}}</h4>
+				</div>
+			</div>
+			<div class="row">
+				<h5>Answers: {{question.answers.length}}</h3>
+			</div>
+		</div>
+		
+	</div>
+	<div class="row" ng-hide="filteredQuestions.length">
+		No question...
+	</div>
 </div>

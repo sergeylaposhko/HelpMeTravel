@@ -1,0 +1,69 @@
+
+###############CITY################## done
+//returns all cities in the programm
+city/all?from=''to=''
+
+//returns the info about city by name or id
+city/where?name='name'&from='''&to=''
+
+//returns the info about city by name or id
+city/byid?id='id'
+
+//returns cities, where current user can be a guide
+city/byuser?userId='id'
+
+//add city to user
+city/addToUser?cityId=''&sessionId=''
+//add city
+city/add?sessionId=''&info=''
+
+
+###############PLACE################## done
+//returns places in the city
+place/bycity?cityName='cityname'&cityId='cityId'
+
+//returns places by params
+place/where?key='key'&cityId='cityId'
+
+//returns places by id
+place/byid?id='id'
+
+//returns places of the user POST
+place/byuser?sessionId='id'
+//add place
+place/add?sessionId=''&info=''
+
+###############QUESTION################Done
+//returns questions in the city
+question/bycity?cityId='id'
+
+//returns questions by keyWord
+question/where?key='key'&cityId='cityId'
+
+//returns question with answers
+question/byid?id=''
+//add question
+question/add?sessionId=''&header=''&text=''&cityId=''
+###############GUIDE################## Done
+//returns guides in the city
+guide/bycity?cityName='cityname'&cityId='cityId'
+
+//returns guides by params
+guide/where?key='key'
+
+//returns guides by id
+guide/where?id='id'
+
+###############ANSWER##################
+//add answer
+answer/add?sessionId=''&text=''&questionId=''
+
+###############USER##################
+//register
+user/register?login=''&firstName=''&lastName=''&sex='m'&countryId=''&photo=''&aboutMe=''&password='md5(password)'
+
+//login POST
+user/login?login=''&password=''
+
+//logout
+user/logout?sessionID=''

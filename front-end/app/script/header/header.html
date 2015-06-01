@@ -1,0 +1,96 @@
+<div class="header" ng-controller="headerController">
+	
+	<div class="navbar navbar-default">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0)">Brand</a>
+		</div>
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li><a></a></li>
+				<li><a></a></li>
+				<li ng-show="errors.login">Error while login...</li>
+				<li ng-show="errors.register">Error while register...</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-hide="loginData.logined">
+					<button class="btn btn-primary btn-raised"
+					data-toggle="modal"
+					data-target="#loginModal">Login
+					</button>
+				</li>
+				<li ng-hide="loginData.logined">
+					<button class="btn btn-primary btn-raised"
+					data-toggle="modal"
+					data-target="#registerModal">Register
+					</button>
+				</li>
+				<li ng-show="loginData.logined">
+					<button class="btn btn-primary btn-raised" ng-click="doLogout()">Logout</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login modal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-center">Login</h4>
+				</div>
+				<div class="modal-body">
+					<form ng-submit="doLogin()" onsubmit="$('#loginModal').modal('toggle')">
+						
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<input class="form-control" ng-model="login.login" placeholder="login" type="text">
+								<input class="form-control" ng-model="login.password" placeholder="password" type="password">
+							</div>
+						</div>
+						<div class="modal-footer row">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="Login modal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-center">Register</h4>
+				</div>
+				<div class="modal-body">
+					<form ng-submit="doRegister()" onsubmit="$('#registerModal').modal('toggle')">
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<input class="form-control" ng-model="register.login" placeholder="login" type="text">
+								<input class="form-control" ng-model="register.firstname" placeholder="First name" type="text">
+								<input class="form-control" ng-model="register.lastName" placeholder="Last name" type="text">
+								<input class="form-control" ng-model="register.password" placeholder="password" type="password">
+								<input class="form-control" ng-model="register.passwordConfirmation" placeholder="login" type="password">
+								<select name="countryId" ng-model="register.countryId">
+									<option value="{{::country.id}}" ng-repeat="country in countries">
+										{{::country.name}}
+									</option>
+								</select>
+								<textarea class="form-control" ng-model="register.aboutMe" placeholder="About you" type="text"/>
+							</div>
+						</div>
+						<div class="modal-footer row">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

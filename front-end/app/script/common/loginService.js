@@ -1,9 +1,19 @@
 angular.module('tqApp')
 
-.service('loginService', function(){
-	this.logined = true;
-	this.triger = function triger () {
-		this.logined = !this.logined;
+.service('loginService', ['$cookies', function($cookies) {
+	console.log($cookies);
+	this.sessionId = $cookies['sessionId'];
+	this.logined = this.sessionId;
+
+	this.makeLogin = function(sessionId) {
+		this.sessionId = sessionId;
+		this.logined = true;  
+		$cookies['sessionId'] = sessionId;
 	}
-	console.log('Hello from service.');
-})
+
+	this.makeLogout = function(){
+		this.sessionId = null;
+		this.logined = false;
+		$cookies['sessionId'] = '';
+	}
+}]);
