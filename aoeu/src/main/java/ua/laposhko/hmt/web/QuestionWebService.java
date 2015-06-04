@@ -21,7 +21,9 @@ import ua.laposhko.hmt.web.exception.AuthorException;
 import ua.laposhko.hmt.web.exception.WrongParamException;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Sergey Laposhko
@@ -149,7 +151,7 @@ public class QuestionWebService extends AbstractWebService {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public
     @ResponseBody
-    void addQuestion(@RequestParam("cityId") long cityId,
+    void addQuestion(@RequestParam(value = "cityId", required = false) Long cityId,
                      @RequestParam("sessionId") String sessionId,
                      @RequestParam("header") String header, @RequestParam("text") String text) {
         LOGGER.debug("Prociding addQuestion command with param " + cityId
@@ -161,7 +163,10 @@ public class QuestionWebService extends AbstractWebService {
         }
         Long userId = sessionManager.getUserId(sessionId);
         User user = userService.findById(userId.intValue());
-        City city = cityService.findById(cityId);
+        City city = null;
+        if (cityId != null) {
+            city = cityService.findById(cityId);
+        }
 
         Question question = new Question();
         question.setDate(new Date(Calendar.getInstance().getTime().getTime()));
