@@ -34,6 +34,14 @@ resources
 			method: 'GET',
 			isArray: true,
 			url: RestConfig.url + 'question/byuser?userId=:id'
-		}
+		},
+        'add': {
+            method: 'POST',
+            isArray: false,
+            url: RestConfig.url + 'question/add',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
 	});
 }]);

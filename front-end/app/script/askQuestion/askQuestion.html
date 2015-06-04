@@ -1,9 +1,11 @@
 <div class="container">
     <div class="question-info well">
-  
-          <textarea>
-              
-          </textarea>
-  
+
+      Input your question header:
+       <input class="form-control" type="text" ng-model="userQuestion.header" placeholder="Question header">
+       Input the text of the question:
+        <textarea class="form-control" cols="30" rows="5" ng-model="userQuestion.text" placeholder="Question text"></textarea>
+        <button class="btn" ng-click="sendQuestion()">Ask question</button>
+
     </div>
 </div>

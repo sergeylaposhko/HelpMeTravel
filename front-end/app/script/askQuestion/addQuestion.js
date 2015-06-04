@@ -11,10 +11,17 @@ angular.module('tqApp')
 	}])
 	.controller('AskQuestionController', ['$scope', '$routeParams', 'loginService', 'Question',
 		function($scope, $routeParams, loginService, Question) {
-			$scope.questions = Question.query();
-
-            $scope.askQuestion = function(){
-                
+			$scope.userQuestion = {};
+            
+            $scope.sendQuestion = function() {
+                alert($scope.userQuestion.text);
+                Question.add({}, $.param({
+                    sessionId: loginService.sessionId,
+                    header: $scope.userQuestion.header,
+                    text: $scope.userQuestion.text
+                }), function(data){
+                    alert(data);
+                })
             }
             
 		}
