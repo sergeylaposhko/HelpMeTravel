@@ -21,11 +21,11 @@ angular.module('tqApp')
 					console.log('Vote up is succed for questionID ' + questionId);
 					$scope.updateQuestion(questionId);
 				})
-			}
+			}  
 
 			$scope.voteDown = function(questionId) {
 				Question.voteDown({}, $.param({
-					sessionId: loginService.sessionId,
+					sessionId: loginService.sessionId, 
 					questionId: questionId
 				}), function(data){
 					$scope.updateQuestion(questionId);
