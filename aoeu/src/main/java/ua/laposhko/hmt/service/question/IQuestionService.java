@@ -12,4 +12,5 @@ public interface IQuestionService extends GenericManager<Question> {
 
     List<Question> findByUserId(long userId);
 
+    List<Question> findByCity(long cityId);
 }

@@ -26,6 +26,36 @@ angular.module('tqApp')
 					$scope.questions = data;
 				})
 			})
+            
+			$scope.voteUp = function(questionId) {
+				Question.voteUp({}, $.param({
+					sessionId: loginService.sessionId,
+					questionId: questionId
+				}), function(data) {
+					$scope.updateQuestion(questionId);
+				})
+			}  
+
+			$scope.voteDown = function(questionId) {
+				Question.voteDown({}, $.param({
+					sessionId: loginService.sessionId, 
+					questionId: questionId
+				}), function(data){
+					$scope.updateQuestion(questionId);
+				});
+			};
+            
+            $scope.updateQuestion = function updateQuestion(questionId) {
+				var newQuestion = Question.get({id: questionId}, function(data){
+					for (var i = 0; i < $scope.questions.length; i++) {
+						var curQuestion = $scope.questions[i]
+						if(curQuestion.id === questionId){
+							$scope.questions[i] = data;
+							break;
+						}
+					};
+				})
+			}
 
 		}
 

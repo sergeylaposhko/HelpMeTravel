@@ -73,19 +73,10 @@ public class QuestionWebService extends AbstractWebService {
     @RequestMapping(value = "/bycity", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<Question> getQuestionByCity(@RequestParam("cityId") String cityId) {
+    List<Question> getQuestionByCity(@RequestParam("cityId") long cityId) {
         LOGGER.debug("Prociding getQuestionByCity command with param " + cityId);
-        long cityidParsed = 0;
-        try {
-            cityidParsed = Long.valueOf(cityId);
-        } catch (NumberFormatException e) {
-            LOGGER.error("Wrong parameter " + cityId);
-            throw new WrongParamException("cityId");
-        }
-        DAOFactory factory = DAOFactory.getIntsatnce();
-        QuestionDAO questionDAO = factory.getQuestionDAO();
-        List<Question> questions = questionDAO
-                .findQuestionsByCity(cityidParsed);
+
+        List<Question> questions = questionService.findByCity(cityId);
         LOGGER.debug("Question count: " + questions.size());
         return questions;
     }

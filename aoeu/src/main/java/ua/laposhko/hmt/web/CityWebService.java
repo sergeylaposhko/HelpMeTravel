@@ -98,16 +98,14 @@ public class CityWebService extends AbstractWebService {
     @RequestMapping(value = "/byid", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<City> getCityByIdName(@RequestParam("id") long id) {
+    City getCityByIdName(@RequestParam("id") long id) {
         LOGGER.debug("Prociding cityByID command. Params: " + id);
 
         City city = cityService.findById(id);
         if (city == null) {
             LOGGER.warn("City wasn't found. Id = " + id);
         }
-        List<City> res = new ArrayList<City>();
-        res.add(city);
-        return res;
+        return city;
     }
 
     @RequestMapping(value = "/byuser", method = RequestMethod.GET)

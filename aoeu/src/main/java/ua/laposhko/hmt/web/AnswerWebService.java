@@ -45,6 +45,13 @@ public class AnswerWebService extends AbstractWebService {
         this.answerService = answerService;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/byid")
+    public
+    @ResponseBody
+    Answer getAnswerById(@RequestParam("id") long id){
+        return answerService.findById(id);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public
     @ResponseBody

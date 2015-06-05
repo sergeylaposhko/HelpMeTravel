@@ -35,6 +35,11 @@ resources
 			isArray: true,
 			url: RestConfig.url + 'question/byuser?userId=:id'
 		},
+        'getByCity': {
+            method: 'GET',
+			isArray: true,
+			url: RestConfig.url + 'question/bycity?cityId=:id'
+        },
         'add': {
             method: 'POST',
             isArray: false,

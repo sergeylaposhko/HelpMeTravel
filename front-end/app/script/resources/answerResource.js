@@ -27,6 +27,11 @@ resources
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
-		}
+		},
+        'get': {
+            method: 'GET',
+            isArray: false,
+            url: RestConfig.url + 'answer/byid?id=:id'
+        }
 	});
 }]);

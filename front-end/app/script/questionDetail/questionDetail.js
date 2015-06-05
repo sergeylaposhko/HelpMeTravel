@@ -28,7 +28,7 @@ angular.module('tqApp')
 				})
 			}
 
-			$scope.voteAnswerDown = function(answerID) {
+			$scope.voteAnswerDown = function(answerId) {
 				Answer.voteDown({}, $.param({
 					answerId: answerId,
 					sessionId: loginService.sessionId

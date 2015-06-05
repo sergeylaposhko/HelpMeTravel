@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.laposhko.hmt.dao.generic.GenericHibernateDao;
 import ua.laposhko.hmt.dao.generic.GenericHibernateDaoImpl;
-import ua.laposhko.hmt.entity.Place;
 import ua.laposhko.hmt.entity.Question;
 import ua.laposhko.hmt.service.generic.GenericManagerImpl;
 
@@ -31,10 +30,23 @@ public class QuestionService extends GenericManagerImpl<Question, GenericHiberna
         List<Question> all = super.findAll();
         List<Question> result = new ArrayList<>();
         for (Question question : all) {
-            if (question.getUser().getId() == userId) {
+            if (question != null && question.getUser() != null && question.getUser().getId() == userId) {
                 result.add(question);
             }
         }
+        return result;
+    }
+
+    @Override
+    public List<Question> findByCity(long cityId) {
+        List<Question> all = findAll();
+        List<Question> result = new ArrayList<>();
+        for (Question question : all) {
+            if(question.getCity() != null && question.getCity().getId() == cityId){
+                result.add(question);
+            }
+        }
+
         return result;
     }
 

@@ -83,7 +83,7 @@ public class AnswerVoteWebService extends AbstractWebService {
         boolean alreadyContainVote = false;
         if(votes != null){
             for (AnswerVote vote : votes) {
-                if(vote.getUser().getId() == user.getId()){
+                if(vote.getUser() != null && vote.getUser().getId() == user.getId()){
                     alreadyContainVote = true;
                     LOGGER.debug("Vote already exsist for user with id: " + userId + " and answer id: " + answer.getId());
                     break;

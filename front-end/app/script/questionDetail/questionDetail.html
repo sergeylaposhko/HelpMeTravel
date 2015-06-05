@@ -26,7 +26,8 @@
             </div>
         </div>
         <div class="answers list-group">
-            <div class="list-group-item" ng-repeat="answer in question.answers | orderBy:'-votes.length'">
+<!--            | orderBy:'-votes.length'-->
+            <div class="list-group-item" ng-repeat="answer in question.answers">
                 <div class="list-group-separator"></div>
                 <h4>Answer</h4>
                 <div class="col-xs-9">
@@ -62,7 +63,7 @@
             </div>
             <div class="list-group-separator"></div>
         </div>
-        <div class="row answer-input">
+        <div class="row answer-input" ng-show="loginData.logined">
 <!--           ng-show="loginData.logined" TODO-->
             <div class="col-xs-6 col-xs-offset-3">
                 <textarea class="form-control" cols="30" rows="5" ng-model="userAnswer" placeholder="Input your answer here..."></textarea>

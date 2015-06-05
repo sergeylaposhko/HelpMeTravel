@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="question-info well">
+        <div class="row">
+
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="row">
+                    <h3>{{city.name}}</h3>
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+        City's questions:
+        <div class="list-group-item row" ng-repeat="question in questions">
+            <div class="list-group-separator"></div>
+            <h4>Question</h4>
+            <div class="col-xs-9">
+                <div class="row">
+                    <a href="#/questionDetail/{{::question.id}}">{{question.header}}</a>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    {{question.text}}
+                </div>
+                <div class="row">
+                    <br>
+                    <br> {{question.date}}
+                </div>
+            </div>
+            <div class="col-xs-3 text-right">
+                <div class="row" ng-show="loginData.logined">
+                    <button class="btn btn-sm" ng-click="voteUp(question.id)">
+                        <i class="mdi-navigation-expand-less"></i>
+                    </button>
+                    <button class="btn btn-sm" ng-click="voteDown(question.id)">
+                        <i class="mdi-navigation-expand-more"></i>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-sm- col-sm-offset-6">
+                        <h4>Rate: {{question.votes.length}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-separator"></div>
+    </div>
+</div>

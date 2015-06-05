@@ -29,6 +29,6 @@ public class AlwaysTrueSessionManager extends SessionManager {
     @Override
     public Long getUserId(String sessionId) {
         LOGGER.debug("Getting user by session " + sessionId);
-        return 6L;
+        return 2L;
     }
 }
