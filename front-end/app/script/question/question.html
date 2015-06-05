@@ -8,7 +8,7 @@
 		<div class="col-sm-4 col-sm-offset-4">
 			<input class="form-control" type="text" ng-model="searchQuestion.header" ng-model-options="{debounce: 300}" placeholder="Search">
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" ng-show="loginData.logined">
 		    <a href="#/askQuestion" class="btn btn-primary">Ask question</a>
 		</div>
 	</div>
