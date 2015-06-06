@@ -13,6 +13,7 @@ angular.module('tqApp')
 		function($scope, $routeParams, loginService, Question) {
 			$scope.questions = Question.query();
 
+			
             $scope.loginData = loginService;
             
 			$scope.voteUp = function(questionId) {

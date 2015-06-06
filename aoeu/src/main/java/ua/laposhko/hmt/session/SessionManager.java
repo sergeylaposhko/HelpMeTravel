@@ -43,7 +43,7 @@ public abstract class SessionManager {
 
     public synchronized static final SessionManager getInstance() {
         if (instance == null) {
-            instance = new AlwaysTrueSessionManager(); //todo replace it with real instance.
+            instance = new RedisSessionManager(); //todo replace it with real instance.
         }
         return instance;
     }

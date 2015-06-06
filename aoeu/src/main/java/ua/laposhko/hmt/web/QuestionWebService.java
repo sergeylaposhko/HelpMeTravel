@@ -157,6 +157,8 @@ public class QuestionWebService extends AbstractWebService {
         City city = null;
         if (cityId != null) {
             city = cityService.findById(cityId);
+        } else {
+            city = cityService.findById(2);
         }
 
         Question question = new Question();

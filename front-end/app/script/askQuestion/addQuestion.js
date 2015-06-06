@@ -14,13 +14,12 @@ angular.module('tqApp')
 			$scope.userQuestion = {};
             
             $scope.sendQuestion = function() {
-                alert($scope.userQuestion.text);
                 Question.add({}, $.param({
                     sessionId: loginService.sessionId,
                     header: $scope.userQuestion.header,
                     text: $scope.userQuestion.text
                 }), function(data){
-                    alert(data);
+                	window.location.href = '/#/question/1';
                 })
             }
             
